@@ -1,0 +1,186 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>QR Code - {{ business.name }} | ReviewAI</title>
+  <link rel="stylesheet" href="{% static 'css/create_qrcode.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Simple Header -->
+  <header class="page-header">
+    <div class="header-content">
+      <a href="{% url 'businesses:dashboard' %}" class="back-link">
+        ← Back to Dashboard
+      </a>
+      <div class="page-title">
+        <h1>QR Code Generator</h1>
+      </div>
+      <div style="width: 140px;"></div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="main-container">
+    <div class="content-wrapper">
+      <!-- Left Side - customization -->
+      <div class="customization-panel">
+        <div class="panel-header">
+          <h2>Create Your QR Code</h2>
+          <p>Customize your QR code card for your business</p>
+        </div>
+
+        <!-- Logo Upload -->
+        <div class="option-group">
+          <label class="option-label">Business Logo</label>
+          <div class="upload-area" onclick="document.getElementById('logoInput').click()">
+            <div class="upload-icon">📷</div>
+            <p style="font-weight: 600;">Click to upload logo</p>
+            <p style="font-size: 0.85rem; color: #999; margin-top: 0.25rem;" id="uploadStatus">
+              Recommended: 500×500px
+            </p>
+          </div>
+          <input type="file" id="logoInput" style="display: none;" accept="image/*" onchange="handleLogoUpload(event)">
+        </div>
+
+        <!-- Business Name -->
+        <div class="option-group">
+          <label class="option-label" for="businessName">Business Name</label>
+          <input type="text" id="businessName" class="text-input" value="My Business" onchange="updateBusinessName(this.value)">
+        </div>
+
+        <!-- Tagline -->
+        <div class="option-group">
+          <label class="option-label" for="taglineInput">Tagline</label>
+          <input type="text" id="taglineInput" class="text-input" value="Leave a review" placeholder="Your message..." onchange="updateTagline(this.value)">
+        </div>
+      </div>
+
+      <div class="card-container">
+        <div class="review-card" id="qrCard">
+          <div class="qr-wrapper">
+            <img src="{% url 'businesses:qr_code' token=review_link.token %}" alt="QR Code for {{ business.name }}" class="qr-code-image">
+          </div>
+
+          <h1 class="tagline-text" id="tagline">Leave a review</h1>
+          <p class="business-name" id="businessTitle">My Business</p>
+
+          <div class="google-section">
+            <img src="{% static 'images/logo-google-reviews.png' %}" alt="Logo" class="google-review-logo">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Download Section -->
+    <div class="download-section">
+      <h2>Ready to Print?</h2>
+      <p>Download your QR code in your preferred format</p>
+      
+      <div class="download-grid">
+        <button class="download-btn download-btn-primary" onclick="downloadQRCard()">
+          <span class="btn-icon">💎</span>
+          <span>Download Card</span>
+          <small>High-res PNG with design</small>
+        </button>
+        
+        <button class="download-btn download-btn-secondary" onclick="downloadQROnly()">
+          <span class="btn-icon">📱</span>
+          <span>QR Code Only</span>
+          <small>Just the QR code</small>
+        </button>
+        
+        <button class="download-btn download-btn-secondary" onclick="printCard()">
+          <span class="btn-icon">🖨️</span>
+          <span>Print Preview</span>
+          <small>Print-friendly version</small>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let uploadedLogo = null;
+
+    // Handle logo upload
+    function handleLogoUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          uploadedLogo = e.target.result;
+          updateLogo();
+          document.getElementById('uploadStatus').textContent = file.name;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    // Update logo
+    function updateLogo() {
+      const logoBox = document.getElementById('logoBox');
+      if (uploadedLogo) {
+        logoBox.innerHTML = `<img src="${uploadedLogo}" alt="Logo">`;
+      }
+    }
+
+    // Update business name
+    function updateBusinessName(value) {
+      document.getElementById('businessTitle').textContent = value || '{{ business.name }}';
+    }
+
+    // Update tagline
+    function updateTagline(value) {
+      document.getElementById('tagline').textContent = value || 'leave a review';
+    }
+
+    // Download functions
+    function downloadQRCard() {
+      const card = document.getElementById('qrCard');
+      
+      if (!card) {
+        alert('Card element not found');
+        return;
+      }
+      
+      if (typeof html2canvas === 'undefined') {
+        alert('Please wait for the page to load completely');
+        return;
+      }
+      
+      html2canvas(card, {
+        scale: 2,
+        backgroundColor: '#ffffff'
+      }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = '{{ business.name|slugify }}-qr-card.png';
+        link.href = canvas.toDataURL();
+        link.click();
+      }).catch(error => {
+        console.error('Error:', error);
+        alert('Download failed. Please try again.');
+      });
+    }
+
+    function downloadQROnly() {
+      const link = document.createElement('a');
+      link.download = '{{ business.name|slugify }}-qr-code.png';
+      link.href = '{% url "businesses:qr_code" token=review_link.token %}';
+      link.click();
+    }
+
+    function printCard() {
+      window.print();
+    }
+
+    // Load html2canvas
+    if (!window.html2canvas) {
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+      document.head.appendChild(script);
+    }
+  </script>
+</body>
+</html>

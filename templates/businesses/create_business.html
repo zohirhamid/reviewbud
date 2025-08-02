@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add Business - Review Collector</title>
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_PLACES_API_KEY }}&libraries=places"></script>
+
+    <style>
+        #map {
+            width: 100%;
+            height: 300px;
+            margin-top: 1rem;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>Add Your Business</h1>
+                <p>Get started collecting reviews today</p>
+            </div>
+
+            <form method="post" class="auth-form">
+                {% csrf_token %}
+
+                <!-- Google Places Search -->
+                <div class="form-group">
+                    <label for="places-search">Search Your Business</label>
+                    <input type="text" id="places-search" placeholder="Start typing your business name..." required>
+                </div>
+
+                <!-- Map preview -->
+                <div id="map"></div>
+
+                <!-- Hidden fields sent to Django -->
+                <input type="hidden" name="name" id="business-name">
+                <input type="hidden" name="address" id="business-address">
+                <input type="hidden" name="google_review_url" id="google-url">
+
+                <button type="submit" class="auth-btn" style="margin-top: 1rem;">Add Business</button>
+            </form>
+
+            <div class="auth-footer">
+                <p><a href="{% url 'businesses:dashboard' %}">← Back to Dashboard</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let map;
+        let marker;
+
+        function initAutocomplete() {
+            const input = document.getElementById('places-search');
+            const autocomplete = new google.maps.places.Autocomplete(input, {
+                types: ['establishment'],
+                fields: ['name', 'formatted_address', 'geometry', 'place_id']
+            });
+
+            // Default location (center of map before user selects anything)
+            const defaultLatLng = { lat: 51.5074, lng: -0.1278 }; // London
+
+            // Initialize the map
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: defaultLatLng,
+                zoom: 14,
+                mapTypeControl: false,
+            });
+
+            marker = new google.maps.Marker({
+                map: map,
+                position: defaultLatLng
+            });
+
+            autocomplete.addListener('place_changed', () => {
+                const place = autocomplete.getPlace();
+
+                if (!place.geometry || !place.name || !place.formatted_address || !place.place_id) {
+                    alert('Please select a valid business from the suggestions.');
+                    return;
+                }
+
+
+                // Update hidden inputs
+                document.getElementById('business-name').value = place.name;
+                document.getElementById('business-address').value = place.formatted_address;
+                document.getElementById('google-url').value = `https://search.google.com/local/writereview?placeid=${place.place_id}`;
+
+
+                // Update map position and marker
+                map.setCenter(place.geometry.location);
+                map.setZoom(16);
+
+                marker.setPosition(place.geometry.location);
+                marker.setTitle(place.name);
+            });
+        }
+
+        window.onload = initAutocomplete;
+    </script>
+</body>
+</html>

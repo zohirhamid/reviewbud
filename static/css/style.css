@@ -1,0 +1,564 @@
+/* Modern, clean design */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #5046e5;
+    --primary-light: #6366f1;
+    --primary-dark: #4338ca;
+    --secondary: #f59e0b;
+    --text-dark: #18181b;
+    --text-gray: #52525b;
+    --text-light: #71717a;
+    --bg-cream: #fef9f3;
+    --bg-white: #ffffff;
+    --bg-light: #f4f4f5;
+    --border: #e4e4e7;
+    --success: #22c55e;
+    --surface: #ffffff;
+    --accent: var(--primary);
+    --gradient-start: #2563eb;
+    --gradient-end: #4f46e5;
+    --shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg-white);
+    color: var(--text-dark);
+    line-height: 1.6;
+    min-height: 100vh;
+    /* Prevent iOS bounce scrolling */
+    overscroll-behavior: none;
+    /* Prevent text size adjustment on orientation change */
+    -webkit-text-size-adjust: 100%;
+}
+
+/* Header */
+.header {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+}
+
+.header-content {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 16px 20px;
+    text-align: center;
+}
+
+.header-content h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 6px;
+}
+
+.progress-container {
+    display: none;
+}
+
+/* Progress Bar */
+.progress-container {
+    background: white;
+    padding: 0 20px 16px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.progress-bar {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--primary);
+    width: 0%;
+    transition: width 0.5s ease;
+}
+
+.progress-text {
+    font-size: 0.875rem;
+    color: var(--text-gray);
+    margin-top: 8px;
+    text-align: center;
+}
+
+/* Progress Dots - Larger for mobile */
+.progress-dots {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 12px;
+}
+
+.dot {
+    width: 7.5px;
+    height: 7.5px;
+    border-radius: 50%;
+    background: var(--border);
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    background: var(--primary);
+    transform: scale(1.6);
+}
+
+.dot.completed {
+    background: var(--success);
+}
+
+/* Form container - Better mobile spacing */
+.form-container {
+    max-width: 600px;
+    margin: 1rem auto;
+    padding: 0 16px;
+    min-height: calc(100vh - 80px); /* Much more space! */
+}
+
+/* Form Steps */
+.form-step {
+    display: none;
+    background: white;
+    border-radius: 20px;
+    padding: 18px 22px 20px 20px;
+    box-shadow: var(--shadow);
+    animation: fadeIn 0.4s ease;
+    flex: 1;
+}
+
+.form-step.active {
+    display: flex;
+    flex-direction: column;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.step-header {
+    text-align: center;
+    margin-bottom: 22px;
+}
+
+.step-title {
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 6px;
+}
+
+.step-subtitle {
+    color: var(--text-gray);
+    font-size: 0.95rem;
+}
+
+/* Slider Groups - Mobile optimized */
+.slider-group {
+    margin-bottom: 18px;
+}
+
+.slider-label {
+    display: block;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: var(--text-dark);
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+}
+
+/* Slider Container for precise alignment */
+.slider-container {
+    position: relative;
+    padding: 0 16px;
+}
+
+.slider {
+    width: 100%;
+    height: 8px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--border);
+    border-radius: 4px;
+    outline: none;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+/* Larger thumb for mobile */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 36px;
+    height: 36px;
+    background: var(--primary);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(80, 70, 229, 0.3);
+    transition: all 0.2s ease;
+    border: 4px solid white;
+    position: relative;
+    z-index: 3;
+}
+
+.slider::-webkit-slider-thumb:active {
+    transform: scale(1.2);
+    box-shadow: 0 4px 16px rgba(80, 70, 229, 0.4);
+}
+
+.slider::-moz-range-thumb {
+    width: 36px;
+    height: 36px;
+    background: var(--primary);
+    border-radius: 50%;
+    cursor: pointer;
+    border: 4px solid white;
+    box-shadow: 0 2px 8px rgba(80, 70, 229, 0.3);
+    position: relative;
+    z-index: 3;
+}
+
+/* Slider Options with Grid for perfect alignment */
+.slider-options {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    margin-top: 18px;
+    position: relative;
+}
+
+.slider-options span {
+    text-align: center;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-gray);
+    opacity: 0.4;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    padding: 6px 4px;
+    border-radius: 6px;
+    user-select: none;
+    /* Minimum touch target */
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slider-options span.active {
+    color: var(--primary);
+    opacity: 1;
+    font-weight: 600;
+    transform: scale(1.05);
+}
+
+.slider-options span:active {
+    background: var(--bg-light);
+}
+
+/* Tags Grid - Better mobile layout */
+.tags-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 24px 0 32px;
+}
+
+.tag-btn {
+    background: var(--bg-light);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 18px 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-align: center;
+    color: var(--text-dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    /* Minimum touch target */
+    min-height: 80px;
+}
+
+.tag-btn:active {
+    transform: scale(0.98);
+}
+
+.tag-btn.selected {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.tag-emoji {
+    font-size: 1.75rem;
+    display: block;
+}
+
+/* Text Area - Better mobile UX */
+.textarea-wrapper {
+    position: relative;
+    margin: 24px 0 32px;
+}
+
+.form-textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 16px;
+    padding-bottom: 36px; /* Space for character count */
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    font-size: 16px; /* Prevents zoom on iOS */
+    font-family: inherit;
+    resize: vertical;
+    transition: all 0.3s ease;
+}
+
+.form-textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(80, 70, 229, 0.1);
+}
+
+.char-count {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    font-size: 0.875rem;
+    color: var(--text-gray);
+    background: white;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+/* Navigation Buttons - Mobile optimized */
+.nav-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 24px;
+}
+
+.btn {
+    flex: 1;
+    padding: 18px 24px;
+    border: none;
+    border-radius: 14px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    /* Minimum touch target */
+    min-height: 52px;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-back {
+    background: var(--bg-light);
+    color: var(--text-gray);
+}
+
+.btn-next {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-next:active {
+    background: var(--primary-dark);
+}
+
+/* Slide 3 */
+.loading-state {
+    text-align: center;
+    padding: 40px;
+}
+
+.spinner {
+    font-size: 2rem;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.review-preview {
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    line-height: 1.6;
+    font-style: italic;
+}
+
+.review-editor {
+    width: 100%;
+    min-height: 100px;
+    padding: 15px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.6;
+    resize: vertical;
+    margin: 20px 0;
+}
+
+.review-actions {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.btn-edit {
+    background: #f7fafc;
+    border: 1px solid #e2e8f0;
+    color: #4a5568;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-edit:hover {
+    background: #edf2f7;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background: var(--primary);
+}
+
+.status-text {
+    color: #718096;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-top: 15px;
+}
+
+
+/* Desktop adjustments - can afford more chrome */
+@media (min-width: 641px) {
+    .header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: var(--shadow);
+    }
+    
+    .header-content {
+        padding: 20px;
+        display: block;
+        text-align: center;
+    }
+    
+    .header-content h1 {
+        font-size: 1.75rem;
+        margin-bottom: 8px;
+    }
+    
+    .progress-container {
+        display: block;
+        background: white;
+        padding: 0 20px 20px;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .progress-bar {
+        height: 4px;
+        background: var(--border);
+        border-radius: 2px;
+        overflow: hidden;
+    }
+    
+    .progress-fill {
+        height: 100%;
+        background: var(--primary);
+        width: 0%;
+        transition: width 0.5s ease;
+    }
+    
+    .progress-text {
+        font-size: 0.875rem;
+        color: var(--text-gray);
+        margin-top: 8px;
+        text-align: center;
+    }
+    
+    .progress-dots {
+        margin-top: 12px;
+        justify-content: center;
+    }
+    
+    .dot {
+        width: 8px;
+        height: 8px;
+    }
+    
+    .dot.active {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        transform: scale(1.5);
+    }
+}
+
+/* iOS specific fixes */
+@supports (-webkit-touch-callout: none) {
+    /* Prevent tap highlight */
+    .btn, .tag-btn, .slider-options span {
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* Smooth scrolling */
+    .form-container {
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* Prevent layout shift when keyboard appears */
+@media (max-height: 600px) {
+    .form-container {
+        min-height: auto;
+    }
+    
+    .nav-buttons {
+        padding-top: 16px;
+    }
+}
