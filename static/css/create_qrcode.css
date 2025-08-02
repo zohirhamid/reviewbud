@@ -1,0 +1,336 @@
+/* Clean and Simple Design */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #007bff;
+  --accent: #6c63ff;
+  --text-primary: #2d3748;
+  --text-secondary: #718096;
+}
+
+body {
+  background: #f8f9fa;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Simple Header */
+.page-header {
+  background: white;
+  border-bottom: 1px solid #e1e5e9;
+  padding: 1.5rem 0;
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.back-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.back-link:hover {
+  color: var(--primary);
+  background: rgba(0, 123, 255, 0.05);
+}
+
+.page-title h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* Main Layout */
+.main-container {
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 0 2rem;
+}
+
+.content-wrapper{
+  display: flex;
+  gap: 10px;
+  background: white;
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Left Side - Customization */
+.customization-panel {
+  flex: 1;
+}
+
+.panel-header {
+  margin-bottom: 2rem;
+}
+
+.panel-header h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.panel-header p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+/* Customization Options */
+.option-group {
+  margin-bottom: 2rem;
+}
+
+.option-label {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.upload-area {
+  border: 2px dashed #e1e5e9;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #fafbfc;
+}
+
+.upload-area:hover {
+  border-color: var(--primary);
+  background: white;
+}
+
+.upload-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.text-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e1e5e9;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  background: white;
+}
+
+.text-input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+/* Right Side - Card Preview */
+.card-container {
+  display: flex;
+  justify-content: center;  /* Horizontal centering */
+  align-items: center;      /* Vertical centering */
+
+  flex: 1;
+  position: relative;
+  padding: 30px;
+}
+
+.review-card {
+  background: white;
+  border-radius: 20px;
+  /* Enhanced: Stronger, more modern shadow with multiple layers */
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.04),
+    0 8px 24px rgba(0, 0, 0, 0.06),
+    0 16px 40px rgba(0, 0, 0, 0.08);
+  padding: 30px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  min-width: 400px;
+  max-width: 450px;
+  position: relative;
+  overflow: hidden;
+  /* Enhanced: Subtle border for definition */
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  /* Enhanced: Smooth hover effect */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.review-card:hover {
+  transform: translate(-2px);
+  box-shadow: 
+  0 4px 12px rgba(0, 0, 0, 0.06),
+  0 12px 32px rgba(0, 0, 0, 0.08),
+  0 24px 56px rgba(0, 0, 0, 0.1);
+}
+
+.qr-wrapper {
+  width: 355px;
+  height: 355px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 8px;
+  margin: 0 auto;
+  margin-bottom: 38px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.qr-code-image {
+  width: 120%;
+  height: 120%; 
+  object-fit: cover;
+  object-position: center;
+}
+
+.tagline-text {
+  font-size: 38px;
+  font-weight: 900;
+  color: #1a1a1a;
+  margin-bottom: 9.5px;
+  margin-top: 24px;
+  letter-spacing: -0.5px;
+}
+
+.business-name {
+  font-size: 17px;
+  font-weight: 700;
+  color: #272727;
+  margin-bottom: 25px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* Google reviews logo section */
+.google-section {
+  text-align: center;
+  margin-top: 35px;
+  margin-bottom: 15px;
+}
+
+.google-review-logo {
+  max-width: 120px;
+  height: auto; 
+  object-position: center;
+}
+
+
+@media (max-width: 480px) {
+    .card-container {
+        padding: 20px;
+    }
+
+    .review-card {
+        min-width: unset;
+        width: 100%;
+    }
+}
+
+
+/* COMPACT Download Section */
+.download-section {
+  background: white;
+  border-radius: 16px; /* Reduced from 24px */
+  padding: 1.5rem; /* Reduced from 3rem */
+  margin-top: 2rem; /* Reduced from 3rem */
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* Reduced shadow */
+}
+
+.download-section h2 {
+  font-size: 1.5rem !important; /* Reduced from 2rem */
+  margin-bottom: 0.25rem !important; /* Reduced from 0.5rem */
+  color: var(--text-primary);
+}
+
+.download-section p {
+  color: var(--text-secondary);
+  font-size: 0.9rem; /* Slightly smaller */
+  margin-bottom: 1rem; /* Reduced spacing */
+}
+
+.download-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem; /* Reduced from 1.5rem */
+  margin-top: 1rem; /* Reduced from 2rem */
+}
+
+.download-btn {
+  padding: 1rem; /* Reduced from 1.5rem */
+  border: none;
+  border-radius: 12px; /* Reduced from 16px */
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem; /* Reduced from 1.05rem */
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem; /* Reduced from 0.5rem */
+}
+
+.download-btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: white;
+}
+
+.download-btn-secondary {
+  background: #f8f9fa;
+  color: var(--text-primary);
+  border: 2px solid #e0e0e0;
+}
+
+.download-btn:hover {
+  transform: translateY(-2px); /* Reduced from -3px */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Reduced shadow */
+}
+
+.btn-icon {
+  font-size: 1.5rem; /* Reduced from 2rem */
+}
+
+.download-btn small {
+  font-size: 0.75rem; /* Smaller text */
+  opacity: 0.8;
+  line-height: 1.2;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .download-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+      
+  .download-btn {
+    padding: 0.875rem;
+  }
+
+  .content-wrapper {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .card-container {
+    padding: 30px 20px;
+  }
+}

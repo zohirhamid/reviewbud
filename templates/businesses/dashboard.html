@@ -1,0 +1,106 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ReviewAI – My Businesses</title>
+  <link rel="stylesheet" href="{% static 'css/landing_page.css' %}">
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-icon">⭐</div>
+        <span>ReviewAI</span>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="{% url 'businesses:dashboard' %}" class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+          My Businesses
+        </a>
+        <a href="#" class="nav-link">Analytics</a>
+        <a href="#" class="nav-link">Reviews</a>
+        <a href="#" class="nav-link">Settings</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a href="{% url 'businesses:logout' %}" class="nav-link logout-link">Logout</a>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      <!-- Top Navbar -->
+      <div class="top-navbar">
+        <div class="greeting">Hey, Zohir</div>
+        <div class="profile-picture">
+          <img src="{% static 'images/Profile-sample.png' %}" alt="Profile">
+        </div>
+      </div>
+
+      <div class="page-content">
+        <!-- Header -->
+        <header class="dashboard-header">
+          <div class="header-left">
+            <h1>My Businesses</h1>
+            <p class="header-subtitle">Manage your business profiles and review pages</p>
+          </div>
+          <div class="header-actions">
+            <a href="{% url 'businesses:create_business' %}" class="btn btn-primary">
+              + Add Business
+            </a>
+          </div>
+        </header>
+
+        <!-- Grid View -->
+        <section class="business-grid">
+          {% for business in businesses %}
+            <div class="business-card">
+              <div class="card-header">
+                <div class="business-info">
+                  <h3>{{ business.name }}</h3>
+                  <p class="address">{{ business.address }}</p>
+                </div>
+                <span class="status-badge">Active</span>
+              </div>
+              <div class="card-stats">
+                <div class="stat">
+                  <span class="stat-value">4.8</span>
+                  <span class="stat-label">Avg Rating</span>
+                </div>
+                <div class="stat">
+                  <span class="stat-value">127</span>
+                  <span class="stat-label">Reviews</span>
+                </div>
+                <div class="stat">
+                  <span class="stat-value">89%</span>
+                  <span class="stat-label">Response</span>
+                </div>
+              </div>
+              <div class="business-actions">
+                <a href="{{ business.review_link.get_absolute_url }}" target="_blank" class="btn btn-outline">
+                  View Form
+                </a>
+                <!--<a href="/create-qrcode/abc123-def456-ghi789/" class="btn btn-outline">-->
+                <a href="{% url 'businesses:create_qr_code' token=business.review_link.token %}" class="btn btn-outline">
+                  Create QR Code
+                </a>
+              </div>
+            </div>
+          {% empty %}
+            <div class="empty-state">
+              <div class="empty-icon">🏢</div>
+              <h3>No businesses yet</h3>
+              <p>Start by adding your first business to begin collecting reviews</p>
+              <a href="{% url 'businesses:create_business' %}" class="btn btn-secondary">
+                Add Your First Business
+              </a>
+            </div>
+          {% endfor %}
+        </section>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

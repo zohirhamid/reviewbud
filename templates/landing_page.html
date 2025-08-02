@@ -1,0 +1,297 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ReviewAI - Get More 5-Star Google Reviews</title>
+    <link rel="stylesheet" href="{% static 'css/landing_page.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/" class="logo">
+                <div class="logo-icon">⭐</div>
+                <span>ReviewAI</span>
+            </a>
+            <div class="nav-links">
+                <a href="#how" class="nav-link">How does it work?</a>
+                <a href="#how" class="nav-link">Features</a>
+                <a href="#pricing" class="nav-link">Pricing</a>
+                <a href="/login" class="nav-link">Sign in</a>
+                <a href="/signup" class="nav-cta">Get Started</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+
+        <div class="decorative-dots dots-top-right"></div>
+        <div class="decorative-dots dots-top-left"></div>
+
+        <div class="hero-container">
+            <div class="hero-badge">🎯 Make Writing Reviews Effortless</div>
+
+            <h1>Turn Happy Customers Into <br> 5-Star Google Reviews</h1>
+
+            <p class="hero-subtitle">
+                Make it effortless for satisfied customers to share glowing reviews. 
+                <br> We don't generate reviews. We assist your real customers in sharing their authentic experiences.
+            </p>
+
+            <a href="/signup" class="hero-cta">
+                Get positive Google reviews 🚀
+            </a>
+
+            <!-- Trust Reviews -->
+            <div class="trust-reviews">
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-avatar">JD</div>
+                        <div class="reviewer-info">
+                            <h4>John Davis</h4>
+                            <p class="review-source">Restaurant Owner</p>
+                        </div>
+                    </div>
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">
+                        "We went from 3.8 to 4.7 stars in just 3 months. Our bookings increased by 40%!"
+                    </p>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-avatar">SM</div>
+                        <div class="reviewer-info">
+                            <h4>Sarah Miller</h4>
+                            <p class="review-source">Cafe Manager</p>
+                        </div>
+                    </div>
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">
+                        "So simple! Just placed QR codes on tables and reviews started flowing in naturally."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section class="video-section">
+        <div class="video-container">
+            <h2 class="section-title">From 4.1 to 4.8, no integration, just a few clicks 🚀</h2>
+            <p class="section-subtitle">See how ReviewAI works in under 2 minutes</p>
+            
+            <div class="video-wrapper">
+                <div class="video-placeholder">
+                    <div class="play-button">▶</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="section-how-it-works">
+        <div class="section-header">
+            <h2>How ReviewAI Works</h2>
+            <p class="section-subtitle">Get more Google reviews in 3 simple steps</p>
+        </div>
+
+        <div class="step-container">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <div class="step-icon">📱</div>
+                <h3 class="step-title">Customer Scans QR Code</h3>
+                <p class="step-description">
+                    Place QR codes on tables, receipts, or anywhere in your venue. 
+                    Customers scan with their phone - no app needed.
+                </p>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <div class="step-icon">✨</div>
+                <h3 class="step-title">AI Generates Perfect Review</h3>
+                <p class="step-description">
+                    Customers answer quick questions about their experience. 
+                    Our AI crafts a natural, personalized review instantly.
+                </p>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <div class="step-icon">🚀</div>
+                <h3 class="step-title">One-Tap Post to Google</h3>
+                <p class="step-description">
+                    Review ready! Customers can edit if desired, then post 
+                    directly to your Google Business Profile with one tap.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- QR Code Section -->
+    <section class="qr-section">
+        <div class="qr-container">
+            <div class="qr-content">
+                <h2>Beautiful QR codes that make leaving reviews <span class="highlight">quick and easy.</span></h2>
+                <p>
+                    Simply hand it to happy customers or place it where they sit, wait, or check out—most will leave a glowing review in just 15 seconds.
+                </p>
+                
+            </div>
+            <div class="qr-visual">
+                <div class="qr-card">
+                    <div class="qr-code">
+                        <img src="../static/images/qr-gails-removebg-preview.png" alt="QR Code"> 
+                    </div>
+                    <h3>Scan me!</h3>
+                    <p>Leave a review<br>@ ReviewAI Demo</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="section-header">
+            <h2>Frequently Asked Questions</h2>
+        </div>
+
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">
+                    How does the AI review generation work?
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    Our AI analyzes the customer's responses about their experience and generates 
+                    a natural, authentic review. Each review is unique and reflects the specific 
+                    aspects of their visit. Customers can always edit the review before posting.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Is this compliant with Google's review policies?
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    Yes! ReviewAI is fully compliant. We help customers write their own authentic 
+                    reviews based on their actual experiences. The reviews come from real customers, 
+                    from their own Google accounts, about their genuine visits.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Do customers need to download an app?
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    No app download required! Everything works through a mobile-optimized web 
+                    interface. Customers simply scan the QR code and follow the quick process 
+                    in their browser.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    How long does setup take?
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    You can be up and running in less than 10 minutes. Just sign up, customize 
+                    your review form, download your QR codes, and start collecting reviews. 
+                    Our team is here to help if you need any assistance.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Can I customize the questions for my business?
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    Absolutely! You can customize all questions to match your business type 
+                    and what matters most to your customers. Add questions about specific 
+                    menu items, services, or any aspect of the customer experience.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Ready to Boost Your Google Reviews?</h2>
+            <p>Join hundreds of hospitality businesses already using ReviewAI</p>
+            <a href="/signup" class="cta-primary">
+                Start Your Free Trial
+                <span>→</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 ReviewAI. All rights reserved. Made with ❤️ for hospitality businesses.</p>
+    </footer>
+
+    <!-- JS -->
+    <script>
+        // FAQ toggle
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                // Close other items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                // Toggle current item
+                item.classList.toggle('active');
+            });
+        });
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.review-card, .stat-item, .qr-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
