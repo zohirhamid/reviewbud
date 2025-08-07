@@ -1,4 +1,5 @@
 {% load static %}
+{% load socialaccount %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,18 +17,17 @@
                 <p>Sign in to your Review Collector account</p>
             </div>
 
+            <!-- Traditional Login Form -->
             <form method="post" class="auth-form">
                 {% csrf_token %} <!-- security token -->
                 
                 <div class="form-group">
-
                     <label for="{{ form.username.id_for_label }}">Username</label>
                     {{ form.username }} <!--<input type="text" name="username" id="id_username">-->
                     
                     {% if form.username.errors %}
                         <div class="error">{{ form.username.errors.0 }}</div>
                     {% endif %}
-
                 </div>
 
                 <div class="form-group">
@@ -43,8 +43,17 @@
                     <div class="error">{{ form.non_field_errors.0 }}</div>
                 {% endif %}
 
-                <button type="submit" class="auth-btn">Sign In</button>
+                <button type="submit" class="auth-btn">Sign In with Email</button>
             </form>
+
+            <!-- Google Login Option (Primary) -->
+             <div class="divider">
+                <span>or</span>
+            </div>
+            
+            <a href="{% provider_login_url 'google' %}" class="google-btn">
+                <span>🔑</span> Continue with Google
+            </a>
 
             <div class="auth-footer">
                 <p>Don't have an account? <a href="{% url 'businesses:signup' %}">Sign up here</a></p>
