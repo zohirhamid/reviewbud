@@ -1,4 +1,6 @@
 {% load static %}
+{% load socialaccount %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,8 +21,8 @@
                 <a href="#how" class="nav-link">How does it work?</a>
                 <a href="#how" class="nav-link">Features</a>
                 <a href="#pricing" class="nav-link">Pricing</a>
-                <a href="/login" class="nav-link">Sign in</a>
-                <a href="/signup" class="nav-cta">Get Started</a>
+                <a href="{% url 'businesses:login' %}" class="nav-link">Sign in</a>
+                <a href="{% url 'businesses:signup' %}" class="nav-cta">Get Started</a>
             </div>
         </div>
     </nav>
@@ -41,7 +43,7 @@
                 <br> We don't generate reviews. We assist your real customers in sharing their authentic experiences.
             </p>
 
-            <a href="/signup" class="hero-cta">
+            <a href="{% url 'businesses:signup' %}" class="hero-cta">
                 Get positive Google reviews 🚀
             </a>
 
@@ -229,7 +231,7 @@
         <div class="cta-content">
             <h2>Ready to Boost Your Google Reviews?</h2>
             <p>Join hundreds of hospitality businesses already using ReviewAI</p>
-            <a href="/signup" class="cta-primary">
+            <a href="{% url 'businesses:signup' %}" class="cta-primary">
                 Start Your Free Trial
                 <span>→</span>
             </a>

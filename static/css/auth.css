@@ -72,6 +72,59 @@ h1 {
     animation: fadeInUp 0.8s ease-out 0.2s both;
 }
 
+/* Google Auth Button */
+.google-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 12px 16px;
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #4a5568;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    margin-bottom: 20px;
+    gap: 8px;
+}
+
+.google-btn:hover {
+    border-color: #cbd5e0;
+    background: #f7fafc;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.google-btn span {
+    font-size: 1.1rem;
+}
+
+/* Divider */
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #e2e8f0;
+}
+
+.divider span {
+    padding: 0 15px;
+    color: #718096;
+    font-size: 0.9rem;
+    background: white;
+}
+
 .auth-form {
     margin-bottom: 20px;
 }
@@ -155,8 +208,12 @@ h1 {
     .auth-header h1 {
         font-size: 1.7rem;
     }
+    
+    .google-btn {
+        padding: 10px 14px;
+        font-size: 0.95rem;
+    }
 }
-
 
 .search-container {
     margin-bottom: 20px;
@@ -177,4 +234,3 @@ h1 {
     border: 1px solid #e2e8f0;
     margin: 15px 0;
 }
-
