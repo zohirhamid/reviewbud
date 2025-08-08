@@ -56,7 +56,7 @@
         <!-- Grid View -->
         <section class="business-grid">
           {% for business in businesses %}
-            <div class="business-card">
+            <div class="business-card" data-url="{% url 'businesses:business_detail' id=business.id %}" onclick="window.location.href=this.dataset.url">
               <div class="card-header">
                 <div class="business-info">
                   <h3>{{ business.name }}</h3>
@@ -78,11 +78,10 @@
                   <span class="stat-label">Response</span>
                 </div>
               </div>
-              <div class="business-actions">
+              <div class="business-actions" onclick="event.stopPropagation()">
                 <a href="{{ business.review_link.get_absolute_url }}" target="_blank" class="btn btn-outline">
                   View Form
                 </a>
-                <!--<a href="/create-qrcode/abc123-def456-ghi789/" class="btn btn-outline">-->
                 <a href="{% url 'businesses:create_qr_code' token=business.review_link.token %}" class="btn btn-outline">
                   Create QR Code
                 </a>

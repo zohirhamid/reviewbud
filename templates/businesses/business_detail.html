@@ -1,0 +1,121 @@
+<!-- business_detail.html - Updated to match QR code page theme -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ business.name }} - ReviewAI</title>
+  <link rel="stylesheet" href="{% static 'css/business_detail.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Simple Header - Matching QR code page -->
+  <header class="page-header">
+    <div class="header-content">
+      <a href="{% url 'businesses:dashboard' %}" class="back-link">
+        ← Back to Dashboard
+      </a>
+      <div class="page-title">
+        <h1>Business Details</h1>
+      </div>
+      <div style="width: 140px;"></div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="main-container">
+    <!-- Business Info Card -->
+    <div class="content-wrapper">
+        <div class="business-info-card card-header">
+          <h2>{{ business.name }}</h2>
+          <p>{{ business.address }}</p>
+        </div>
+    </div>
+
+    <!-- Edit Form Card -->
+    <div class="content-wrapper">
+      <form method="POST" action="{% url 'businesses:update_business' id=business.id %}">
+        {% csrf_token %}
+        
+        <div class="form-card">
+          <div class="panel-header">
+            <h2>Edit Business Information</h2>
+            <p>Update your business details</p>
+          </div>
+          
+          <div class="form-content">
+            <div class="option-group">
+              <label class="option-label" for="id_name">Business Name</label>
+              {{ form.name }}
+            </div>
+            
+            <div class="option-group">
+              <label class="option-label" for="id_address">Business Address</label>
+              {{ form.address }}
+            </div>
+            
+            <div class="option-group">
+              <label class="option-label" for="id_google_review_url">Google Review URL</label>
+              {{ form.google_review_url }}
+            </div>
+          </div>
+          
+          <div class="form-actions">
+            <button type="button" onclick="openDeleteModal()" class="btn-delete">
+              🗑️ Delete Business
+            </button>
+            <button type="submit" class="btn-save">
+              Save Changes
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Delete Confirmation Modal -->
+  <div id="deleteModal" class="modal">
+    <div class="modal-content">
+      <h2>⚠️ Delete Business?</h2>
+      <p>Are you sure you want to delete <strong>{{ business.name }}</strong>?</p>
+      
+      <div class="warning-box">
+        <strong>This action cannot be undone!</strong>
+        All data associated with this business will be permanently deleted, including:
+        <ul style="margin: 8px 0 0 20px; padding: 0;">
+          <li>Customer reviews</li>
+          <li>QR codes</li>
+          <li>Analytics data</li>
+        </ul>
+      </div>
+      
+      <div class="modal-actions">
+        <button onclick="closeDeleteModal()" class="btn-cancel">Cancel</button>
+        <form method="POST" action="{% url 'businesses:delete_business' id=business.id %}" style="display: inline;">
+          {% csrf_token %}
+          <button type="submit" class="btn-confirm-delete">Yes, Delete Business</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    function openDeleteModal() {
+      document.getElementById('deleteModal').style.display = 'flex';
+    }
+    
+    function closeDeleteModal() {
+      document.getElementById('deleteModal').style.display = 'none';
+    }
+    
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      const modal = document.getElementById('deleteModal');
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>

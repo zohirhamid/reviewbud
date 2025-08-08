@@ -435,6 +435,37 @@ body {
   font-size: 1.1rem;
 }
 
+
+/* Add to dashboard.css */
+.business-card {
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.business-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.business-card a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Keep action buttons from triggering card click */
+.business-actions {
+  position: relative;
+  z-index: 2;
+}
+
+.business-actions a {
+  position: relative;
+  z-index: 3;
+}
+
 /* Animation */
 @keyframes fadeIn {
   from {
