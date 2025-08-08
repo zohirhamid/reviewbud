@@ -7,13 +7,16 @@ urlpatterns = [
     path('', views.landing_page, name='landing_page'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('create/', views.create_business, name='create_business'),
-
+    path('business/<int:id>/', views.business_detail, name='business_detail'),
+    path('edit/<int:id>/', views.update_business, name='update_business'),
+    path('delete/<int:id>/', views.delete_business, name='delete_business'),
+    
     # Authentication
     path('signup/', views.signup_view, name='signup'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
-
+    
     # qr code
     path('qr_code/<uuid:token>/', views.qr_code, name='qr_code'),
-    path('create-qrcode/<str:token>/', views.create_qr_code_page, name='create_qr_code')
+    path('create-qrcode/<str:token>/', views.create_qr_code_page, name='create_qr_code'),
 ]

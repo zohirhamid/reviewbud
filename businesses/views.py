@@ -1,13 +1,14 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from django.contrib.auth.decorators import login_required
 from businesses.forms import SignupForm
 from businesses.models import Business, ReviewLink, CustomerReview
 from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm, SignupForm, BusinessForm, CustomerReviewForm 
 from django.conf import settings
+from django.contrib import messages
 import qrcode
 from io import BytesIO
+from django.contrib.auth.decorators import login_required
 
 def landing_page(request):
     if request.user.is_authenticated:
@@ -74,7 +75,7 @@ def create_business(request):
             return redirect('businesses:dashboard')
         else:
             print(form.errors)  # optional: helpful for debugging
-    else: 
+    else:
         '''
         Diplay the add business form for the first time
         before the user fills it out to submit it.
@@ -91,6 +92,45 @@ def create_business(request):
         'form': form,
         'GOOGLE_PLACES_API_KEY': settings.GOOGLE_PLACES_API_KEY,  # or pass from settings
     })
+
+
+def update_business(request, id):
+    business = get_object_or_404(Business, id=id)
+    if request.method == 'POST':
+        form = BusinessForm(request.POST, instance=business)
+        if form.is_valid():
+            form.save()
+            return redirect("businesses:dashboard")
+    else:
+        form = BusinessForm(instance=business)
+    
+    context = {
+        "form": form,
+        "business": business
+    }
+    
+    return render(request, 'businesses/update_business.html', context)
+    
+@login_required
+def delete_business(request, id):
+    if request.method == 'POST':
+        business = get_object_or_404(Business, id=id)
+        business.delete()
+        return redirect('businesses:dashboard')
+    # If not POST, redirect back to dashboard or detail page
+    return redirect('businesses:dashboard')
+
+@login_required  
+def business_detail(request, id):
+    business = get_object_or_404(Business, id=id, owner=request.user)
+    form = BusinessForm(instance=business)
+    
+    context = {
+        'business': business,
+        'form': form,
+    }
+    
+    return render(request, 'businesses/business_detail.html', context)
 
 @login_required
 def create_qr_code_page(request, token):
