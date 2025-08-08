@@ -70,10 +70,15 @@ TEMPLATES = [
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'quickratedb',
+        'USER': 'quickrateuser',
+        'PASSWORD': '011936',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
+
 
 # Custom User Model (IMPORTANT!)
 AUTH_USER_MODEL = 'businesses.User'
