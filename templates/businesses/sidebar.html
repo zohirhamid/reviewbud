@@ -1,0 +1,15 @@
+<aside class="sidebar">
+    <div class="logo">
+        <div class="logo-icon">⭐</div>
+        <span>ReviewAI</span>
+    </div>
+    <nav class="sidebar-nav">
+        <a href="{% url 'businesses:dashboard' %}" class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+          My Businesses
+        </a>
+        <a href="{% url 'businesses:settings' %}" class="nav-link {% if request.resolver_match.url_name == 'settings' %}active{% endif %}">Settings</a>
+    </nav>
+    <div class="sidebar-bottom">
+        <a href="{% url 'businesses:logout' %}" class="nav-link logout-link">Logout</a>
+    </div>
+</aside>

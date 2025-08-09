@@ -1,0 +1,209 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ReviewAI – Settings</title>
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+  <link rel="stylesheet" href="{% static 'css/settings.css' %}">
+</head>
+<body>
+  <div class="dashboard-container">
+    {% include 'businesses/sidebar.html' %}
+
+    <main class="main-content">
+      <div class="top-navbar">
+        <div class="greeting">Account Settings</div>
+        <div class="profile-picture">
+          <img src="{% static 'images/Profile-sample.png' %}" alt="Profile">
+        </div>
+      </div>
+
+      <div class="page-content">
+        <header class="dashboard-header">
+          <div class="header-left">
+            <h1>Settings</h1>
+            <p class="header-subtitle">Manage your account and preferences</p>
+          </div>
+          <div class="header-actions">
+            <a href="{% url 'businesses:dashboard' %}" class="btn btn-outline">
+              ← Back to Dashboard
+            </a>
+          </div>
+        </header>
+
+        {% if messages %}
+          {% for message in messages %}
+            <div class="message message-{{ message.tags }}">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+
+        <section class="settings-grid">
+          <!-- Profile Settings -->
+          <div class="business-card">
+            <div class="card-header">
+              <div class="business-info">
+                <h3>Profile Information</h3>
+              </div>
+            </div>
+            <form method="post" action="?action=profile">
+              {% csrf_token %}
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>First Name</label>
+                  {{ profile_form.first_name }}
+                  {% if profile_form.first_name.errors %}
+                    <div class="form-errors">
+                      {% for error in profile_form.first_name.errors %}
+                        <span class="error">{{ error }}</span>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                </div>
+                <div class="form-group">
+                  <label>Last Name</label>
+                  {{ profile_form.last_name }}
+                  {% if profile_form.last_name.errors %}
+                    <div class="form-errors">
+                      {% for error in profile_form.last_name.errors %}
+                        <span class="error">{{ error }}</span>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                </div>
+                <div class="form-group full-width">
+                  <label>Email</label>
+                  {{ profile_form.email }}
+                  {% if profile_form.email.errors %}
+                    <div class="form-errors">
+                      {% for error in profile_form.email.errors %}
+                        <span class="error">{{ error }}</span>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                </div>
+                <div class="form-group full-width">
+                  <label>Username</label>
+                  <input type="text" value="{{ user.username }}" disabled class="disabled-input">
+                </div>
+              </div>
+              <div class="business-actions">
+                <button type="submit" class="btn btn-primary">Update Profile</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Password Settings -->
+          <div class="business-card {% if not has_password %}disabled-card{% endif %}">
+            <div class="card-header">
+              <div class="business-info">
+                <h3>Update Password</h3>
+                {% if not has_password %}
+                  <p class="card-subtitle">Google account - password managed by Google</p>
+                {% endif %}
+              </div>
+            </div>
+            {% if has_password %}
+              <form method="post" action="?action=password">
+                {% csrf_token %}
+                <div class="form-grid">
+                  <div class="form-group full-width">
+                    <label>Current Password</label>
+                    {{ password_form.old_password }}
+                    {% if password_form.old_password.errors %}
+                      <div class="form-errors">
+                        {% for error in password_form.old_password.errors %}
+                          <span class="error">{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                    {% endif %}
+                  </div>
+                  <div class="form-group">
+                    <label>New Password</label>
+                    {{ password_form.new_password1 }}
+                    {% if password_form.new_password1.errors %}
+                      <div class="form-errors">
+                        {% for error in password_form.new_password1.errors %}
+                          <span class="error">{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                    {% endif %}
+                  </div>
+                  <div class="form-group">
+                    <label>Confirm New Password</label>
+                    {{ password_form.new_password2 }}
+                    {% if password_form.new_password2.errors %}
+                      <div class="form-errors">
+                        {% for error in password_form.new_password2.errors %}
+                          <span class="error">{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="business-actions">
+                  <button type="submit" class="btn btn-secondary">Change Password</button>
+                </div>
+              </form>
+            {% else %}
+              <div class="disabled-content">
+                <p>Your account is linked with Google. To change your password, please visit your Google Account settings.</p>
+                <a href="https://myaccount.google.com/security" target="_blank" class="btn btn-outline">
+                  Manage Google Account
+                </a>
+              </div>
+            {% endif %}
+          </div>
+
+          <!-- Account Actions -->
+          <div class="business-card">
+            <div class="card-header">
+              <div class="business-info">
+                <h3>Account Management</h3>
+              </div>
+            </div>
+            <div class="account-actions">
+              <div class="action-item danger">
+                <div class="action-info">
+                  <h4>Delete Account</h4>
+                  <p>Permanently delete your account and all data</p>
+                </div>
+                <button class="btn btn-danger" onclick="confirmDelete()">Delete</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function confirmDelete() {
+      if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+        if (prompt('Type "DELETE" to confirm:') === 'DELETE') {
+          const form = document.createElement('form');
+          form.method = 'POST';
+          form.action = '?action=delete';
+          
+          const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+          const csrfInput = document.createElement('input');
+          csrfInput.type = 'hidden';
+          csrfInput.name = 'csrfmiddlewaretoken';
+          csrfInput.value = csrfToken;
+          
+          const confirmInput = document.createElement('input');
+          confirmInput.type = 'hidden';
+          confirmInput.name = 'confirm';
+          confirmInput.value = 'DELETE';
+          
+          form.appendChild(csrfInput);
+          form.appendChild(confirmInput);
+          document.body.appendChild(form);
+          form.submit();
+        }
+      }
+    }
+  </script>
+</body>
+</html>

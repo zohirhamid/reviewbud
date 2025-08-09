@@ -1,14 +1,19 @@
 from django import forms
 from django.contrib.auth import authenticate
 from .models import User, Business, CustomerReview
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model  
 
+User = get_user_model() 
 
+# Your existing form (keep exactly as is):
 class SignupForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
     password_confirm = forms.CharField(widget=forms.PasswordInput, label="Confirm Password")
     
     class Meta:
-        model = User
+        model = User  # ← This now references your custom User
         fields = ['username', 'email', 'password']
     
     # checks if 2 password fields match
@@ -21,7 +26,6 @@ class SignupForm(forms.ModelForm):
             raise forms.ValidationError("Passwords don't match")
         
         return cleaned_data
-
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=150)
     password = forms.CharField(widget=forms.PasswordInput)
@@ -63,3 +67,23 @@ class CustomerReviewForm(forms.ModelForm):
             'feedback': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Tell us about your experience...'}),
             'customer_name': forms.TextInput(attrs={'placeholder': 'Your name (optional)'})
         }
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']
+        widgets = {
+            'first_name': forms.TextInput(attrs={
+                'placeholder': 'Enter your first name'
+            }),
+            'last_name': forms.TextInput(attrs={
+                'placeholder': 'Enter your last name'
+            }),
+            'email': forms.EmailInput(attrs={
+                'placeholder': 'Enter your email address'
+            }),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['email'].required = True

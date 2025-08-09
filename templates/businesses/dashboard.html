@@ -11,22 +11,8 @@
 <body>
   <div class="dashboard-container">
     <!-- SIDEBAR -->
-    <aside class="sidebar">
-      <div class="logo">
-        <div class="logo-icon">⭐</div>
-        <span>ReviewAI</span>
-      </div>
-      <nav class="sidebar-nav">
-        <a href="{% url 'businesses:dashboard' %}" class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
-          My Businesses
-        </a>
-        <a href="#" class="nav-link">Analytics</a>
-        <a href="#" class="nav-link">Settings</a>
-      </nav>
-      <div class="sidebar-bottom">
-        <a href="{% url 'businesses:logout' %}" class="nav-link logout-link">Logout</a>
-      </div>
-    </aside>
+    {% include 'businesses/sidebar.html' %}
+
 
     <!-- MAIN CONTENT -->
     <main class="main-content">

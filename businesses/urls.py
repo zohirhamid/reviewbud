@@ -1,3 +1,4 @@
+# businesses/urls.py
 from django.urls import path
 from . import views
 
@@ -16,7 +17,10 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     
-    # qr code
+    # QR code
     path('qr_code/<uuid:token>/', views.qr_code, name='qr_code'),
     path('create-qrcode/<str:token>/', views.create_qr_code_page, name='create_qr_code'),
+
+    # settings
+    path('settings/', views.settings_view, name='settings'),
 ]
