@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ReviewAI - Get More 5-Star Google Reviews</title>
+    <title>ReviewAI - Help Real Customers Share Authentic Reviews</title>
     <link rel="stylesheet" href="{% static 'css/landing_page.css' %}">
 </head>
 <body>
@@ -18,140 +18,241 @@
                 <span>ReviewAI</span>
             </a>
             <div class="nav-links">
-                <a href="#how" class="nav-link">How does it work?</a>
-                <a href="#how" class="nav-link">Features</a>
+                <a href="#how" class="nav-link">How it Works</a>
+                <a href="#features" class="nav-link">Features</a>
                 <a href="#pricing" class="nav-link">Pricing</a>
                 <a href="{% url 'businesses:login' %}" class="nav-link">Sign in</a>
-                <a href="{% url 'businesses:signup' %}" class="nav-cta">Get Started</a>
+                <a href="{% url 'businesses:signup' %}" class="nav-cta">Start Free Trial</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero">
-
         <div class="decorative-dots dots-top-right"></div>
         <div class="decorative-dots dots-top-left"></div>
 
         <div class="hero-container">
-            <div class="hero-badge">🎯 Make Writing Reviews Effortless</div>
+            <!-- Trust Badge -->
+            <div class="hero-badge">
+                ✅ FTC Compliant • 100% Authentic Reviews • No Fake Content
+            </div>
 
-            <h1>Turn Happy Customers Into <br> 5-Star Google Reviews</h1>
+            <h1>Your Experience.<br>Better Expressed.</h1>
 
             <p class="hero-subtitle">
-                Make it effortless for satisfied customers to share glowing reviews. 
-                <br> We don't generate reviews. We assist your real customers in sharing their authentic experiences.
+                We don't generate reviews. We help your real customers share their authentic experiences.
+                <br>Like having Grammarly for restaurant reviews - removing the friction between experience and expression.
             </p>
 
+            <div class="stats-row">
+                <div class="stat">
+                    <div class="stat-number">480%</div>
+                    <div class="stat-label">More Reviews</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Authentic</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">15 sec</div>
+                    <div class="stat-label">To Post</div>
+                </div>
+            </div>
+
             <a href="{% url 'businesses:signup' %}" class="hero-cta">
-                Get positive Google reviews 🚀
+                Start Your Free Trial
+                <span>→</span>
             </a>
 
-            <!-- Trust Reviews -->
-            <div class="trust-reviews">
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="reviewer-avatar">JD</div>
-                        <div class="reviewer-info">
-                            <h4>John Davis</h4>
-                            <p class="review-source">Restaurant Owner</p>
-                        </div>
-                    </div>
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <p class="review-text">
-                        "We went from 3.8 to 4.7 stars in just 3 months. Our bookings increased by 40%!"
-                    </p>
-                </div>
+            <p class="hero-disclaimer">
+                No credit card required • Setup in 10 minutes • Cancel anytime
+            </p>
+        </div>
+    </section>
 
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="reviewer-avatar">SM</div>
-                        <div class="reviewer-info">
-                            <h4>Sarah Miller</h4>
-                            <p class="review-source">Cafe Manager</p>
+    <!-- Problem/Solution Section -->
+    <section class="problem-section">
+        <div class="problem-container">
+            <div class="problem-content">
+                <h2>The Review Gap Problem</h2>
+                <div class="problem-stat">
+                    <div class="big-number">88%</div>
+                    <p>of customers want to leave reviews but don't know what to write</p>
+                </div>
+                <p class="problem-text">
+                    Your happy customers leave your restaurant satisfied but never write that review. 
+                    Not because they don't want to – they just don't know how to articulate their experience.
+                </p>
+            </div>
+            <div class="solution-content">
+                <h2>The Solution: AI-Assisted Expression</h2>
+                <div class="solution-points">
+                    <div class="solution-point">
+                        <span class="check">✓</span>
+                        <div>
+                            <strong>Real Customer, Real Visit</strong>
+                            <p>Only works when a customer is actually at your venue</p>
                         </div>
                     </div>
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <p class="review-text">
-                        "So simple! Just placed QR codes on tables and reviews started flowing in naturally."
-                    </p>
+                    <div class="solution-point">
+                        <span class="check">✓</span>
+                        <div>
+                            <strong>Their Experience, Better Words</strong>
+                            <p>AI helps articulate what they already feel</p>
+                        </div>
+                    </div>
+                    <div class="solution-point">
+                        <span class="check">✓</span>
+                        <div>
+                            <strong>Full Customer Control</strong>
+                            <p>They review, edit, and approve every word</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- Video Section -->
-    <section class="video-section">
-        <div class="video-container">
-            <h2 class="section-title">From 4.1 to 4.8, no integration, just a few clicks 🚀</h2>
-            <p class="section-subtitle">See how ReviewAI works in under 2 minutes</p>
-            
-            <div class="video-wrapper">
-                <div class="video-placeholder">
-                    <div class="play-button">▶</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
 
     <!-- How It Works Section -->
-    <section id="how-it-works" class="section-how-it-works">
+    <section id="how" class="section-how-it-works">
         <div class="section-header">
-            <h2>How ReviewAI Works</h2>
-            <p class="section-subtitle">Get more Google reviews in 3 simple steps</p>
+            <div class="section-badge">How It Works</div>
+            <h2>Authentic Reviews in 3 Simple Steps</h2>
+            <p class="section-subtitle">Every review comes from a real customer's actual experience</p>
         </div>
 
         <div class="step-container">
             <div class="step-card">
                 <div class="step-number">1</div>
                 <div class="step-icon">📱</div>
-                <h3 class="step-title">Customer Scans QR Code</h3>
+                <h3 class="step-title">Customer Scans QR</h3>
                 <p class="step-description">
-                    Place QR codes on tables, receipts, or anywhere in your venue. 
-                    Customers scan with their phone - no app needed.
+                    Happy customer finishes their meal and scans your table QR code. 
+                    No app needed - works instantly on any phone.
                 </p>
             </div>
 
             <div class="step-card">
                 <div class="step-number">2</div>
-                <div class="step-icon">✨</div>
-                <h3 class="step-title">AI Generates Perfect Review</h3>
+                <div class="step-icon">💭</div>
+                <h3 class="step-title">Share Their Experience</h3>
                 <p class="step-description">
-                    Customers answer quick questions about their experience. 
-                    Our AI crafts a natural, personalized review instantly.
+                    They answer quick questions: "What did you order?" "How was the service?" 
+                    Our AI helps articulate their specific experience.
                 </p>
             </div>
 
             <div class="step-card">
                 <div class="step-number">3</div>
-                <div class="step-icon">🚀</div>
-                <h3 class="step-title">One-Tap Post to Google</h3>
+                <div class="step-icon">✅</div>
+                <h3 class="step-title">Review & Post</h3>
                 <p class="step-description">
-                    Review ready! Customers can edit if desired, then post 
-                    directly to your Google Business Profile with one tap.
+                    Customer reviews the suggested text, makes any edits they want, 
+                    then posts to Google with one tap. They control every word.
                 </p>
             </div>
         </div>
     </section>
-    
-    <!-- QR Code Section -->
-    <section class="qr-section">
-        <div class="qr-container">
-            <div class="qr-content">
-                <h2>Beautiful QR codes that make leaving reviews <span class="highlight">quick and easy.</span></h2>
-                <p>
-                    Simply hand it to happy customers or place it where they sit, wait, or check out—most will leave a glowing review in just 15 seconds.
-                </p>
-                
+
+    <!-- Demo Section -->
+    <section class="demo-section">
+        <div class="demo-container">
+            <div class="section-header">
+                <h2>See It In Action</h2>
+                <p class="section-subtitle">Watch how Sarah turns her dining experience into a helpful review</p>
             </div>
-            <div class="qr-visual">
-                <div class="qr-card">
-                    <div class="qr-code">
-                        <img src="../static/images/qr-gails-removebg-preview.png" alt="QR Code"> 
+            
+            <div class="demo-flow">
+                <div class="demo-step">
+                    <div class="demo-label">Sarah's Input</div>
+                    <div class="demo-box">
+                        <p><strong>Rating:</strong> ⭐⭐⭐⭐⭐</p>
+                        <p><strong>What did you have?</strong> Seafood pasta</p>
+                        <p><strong>How was service?</strong> Really attentive</p>
+                        <p><strong>Would you return?</strong> Definitely!</p>
                     </div>
-                    <h3>Scan me!</h3>
-                    <p>Leave a review<br>@ ReviewAI Demo</p>
+                </div>
+                
+                <div class="demo-arrow">→</div>
+                
+                <div class="demo-step">
+                    <div class="demo-label">AI Assists Sarah</div>
+                    <div class="demo-box review-preview">
+                        <p>"Just had an incredible dinner here! The seafood pasta was perfectly cooked with generous portions of fresh shrimp and scallops. Our server was knowledgeable about wine pairings and checked on us just the right amount. Will definitely return!"</p>
+                        <div class="edit-note">✏️ Sarah can edit anything before posting</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust & Compliance Section -->
+    <section class="trust-section">
+        <div class="trust-container">
+            <h2>Built for Trust & Compliance</h2>
+            <p class="trust-subtitle">Unlike review generators, we're 100% authentic and FTC compliant</p>
+            
+            <div class="trust-grid">
+                <div class="trust-card">
+                    <div class="trust-icon">🛡️</div>
+                    <h3>FTC Compliant</h3>
+                    <p>Every review represents a genuine customer experience. No fake content, ever.</p>
+                </div>
+                
+                <div class="trust-card">
+                    <div class="trust-icon">👤</div>
+                    <h3>Customer Controlled</h3>
+                    <p>Customers review and approve every word. Nothing posts without their explicit consent.</p>
+                </div>
+                
+                <div class="trust-card">
+                    <div class="trust-icon">✨</div>
+                    <h3>Assistance, Not Automation</h3>
+                    <p>We help express real experiences, not generate fictional ones. Think Grammarly for reviews.</p>
+                </div>
+                
+                <div class="trust-card">
+                    <div class="trust-icon">📍</div>
+                    <h3>Location Verified</h3>
+                    <p>Only works when customers are actually at your venue. No remote review generation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof Section -->
+    <section class="social-proof">
+        <div class="proof-container">
+            <h2>Trusted by Forward-Thinking Restaurants</h2>
+            
+            <div class="testimonials">
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <div class="quote">"</div>
+                        <p>We went from 2 reviews per month to 31. The difference? Customers actually finish writing their reviews now. It's not magic - it's removing friction.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://ui-avatars.com/api/?name=Michael+Chen&background=5046e5&color=fff" alt="Michael Chen">
+                        <div>
+                            <div class="author-name">Michael Chen</div>
+                            <div class="author-title">Owner, Sakura Sushi</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <div class="quote">"</div>
+                        <p>Finally, a solution that respects both our customers and Google's guidelines. Every review is authentic because it comes from real experiences.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://ui-avatars.com/api/?name=Emma+Rodriguez&background=5046e5&color=fff" alt="Emma Rodriguez">
+                        <div>
+                            <div class="author-name">Emma Rodriguez</div>
+                            <div class="author-title">Manager, The Garden Café</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -160,67 +261,133 @@
     <!-- FAQ Section -->
     <section class="faq-section">
         <div class="section-header">
-            <h2>Frequently Asked Questions</h2>
+            <h2>Common Questions</h2>
+            <p class="section-subtitle">Everything you need to know about authentic AI-assisted reviews</p>
         </div>
 
         <div class="faq-container">
             <div class="faq-item">
                 <div class="faq-question">
-                    How does the AI review generation work?
+                    Isn't this just generating fake reviews?
                     <span class="faq-toggle">+</span>
                 </div>
                 <div class="faq-answer">
-                    Our AI analyzes the customer's responses about their experience and generates 
-                    a natural, authentic review. Each review is unique and reflects the specific 
-                    aspects of their visit. Customers can always edit the review before posting.
+                    No. Every review starts with a real customer at your establishment, sharing their actual experience. 
+                    The AI simply helps them articulate what they experienced—like a writing assistant. 
+                    The customer controls every word that gets posted. We don't create content from nothing; 
+                    we help express what actually happened.
                 </div>
             </div>
 
             <div class="faq-item">
                 <div class="faq-question">
-                    Is this compliant with Google's review policies?
+                    How is this different from ChatGPT?
                     <span class="faq-toggle">+</span>
                 </div>
                 <div class="faq-answer">
-                    Yes! ReviewAI is fully compliant. We help customers write their own authentic 
-                    reviews based on their actual experiences. The reviews come from real customers, 
-                    from their own Google accounts, about their genuine visits.
+                    We don't create content from prompts. We help customers who've actually visited your business 
+                    express their specific experience through guided questions. It's the difference between 
+                    making something up and helping someone communicate better. Plus, it's built specifically 
+                    for restaurant reviews with compliance built in.
                 </div>
             </div>
 
             <div class="faq-item">
                 <div class="faq-question">
-                    Do customers need to download an app?
+                    Is this legal and compliant with Google's policies?
                     <span class="faq-toggle">+</span>
                 </div>
                 <div class="faq-answer">
-                    No app download required! Everything works through a mobile-optimized web 
-                    interface. Customers simply scan the QR code and follow the quick process 
-                    in their browser.
+                    Absolutely. We're fully compliant with FTC regulations because we only help real customers 
+                    share real experiences. There's no deception—just assistance in articulating authentic feedback. 
+                    Reviews come from real customers, from their own Google accounts, about their genuine visits.
                 </div>
             </div>
 
             <div class="faq-item">
                 <div class="faq-question">
-                    How long does setup take?
+                    What control do customers have?
                     <span class="faq-toggle">+</span>
                 </div>
                 <div class="faq-answer">
-                    You can be up and running in less than 10 minutes. Just sign up, customize 
-                    your review form, download your QR codes, and start collecting reviews. 
-                    Our team is here to help if you need any assistance.
+                    Complete control. Customers see the suggested review text, can edit any part of it, 
+                    and must explicitly approve before posting. Nothing gets published without their consent. 
+                    They can also write from scratch if they prefer. We're just here to help if needed.
                 </div>
             </div>
 
             <div class="faq-item">
                 <div class="faq-question">
-                    Can I customize the questions for my business?
+                    Can this create negative reviews?
                     <span class="faq-toggle">+</span>
                 </div>
                 <div class="faq-answer">
-                    Absolutely! You can customize all questions to match your business type 
-                    and what matters most to your customers. Add questions about specific 
-                    menu items, services, or any aspect of the customer experience.
+                    Yes, if that's the customer's genuine experience. We help articulate all authentic experiences, 
+                    not just positive ones. If a customer rates 2 stars and mentions cold food, we'll help them 
+                    express that. Authenticity means accepting all genuine feedback.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section (Simple for Portfolio) -->
+    <section id="pricing" class="pricing-section">
+        <div class="pricing-container">
+            <div class="section-header">
+                <h2>Simple, Transparent Pricing</h2>
+                <p class="section-subtitle">Start free, upgrade when you see results</p>
+            </div>
+            
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <div class="plan-name">Starter</div>
+                    <div class="price">
+                        <span class="currency">$</span>
+                        <span class="amount">0</span>
+                        <span class="period">/month</span>
+                    </div>
+                    <ul class="features">
+                        <li>✓ Up to 10 reviews/month</li>
+                        <li>✓ 1 location</li>
+                        <li>✓ Basic analytics</li>
+                        <li>✓ Email support</li>
+                    </ul>
+                    <a href="{% url 'businesses:signup' %}" class="pricing-cta secondary">Start Free</a>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <div class="badge">Most Popular</div>
+                    <div class="plan-name">Professional</div>
+                    <div class="price">
+                        <span class="currency">$</span>
+                        <span class="amount">49</span>
+                        <span class="period">/month</span>
+                    </div>
+                    <ul class="features">
+                        <li>✓ Unlimited reviews</li>
+                        <li>✓ Up to 3 locations</li>
+                        <li>✓ Advanced analytics</li>
+                        <li>✓ Priority support</li>
+                        <li>✓ Custom QR designs</li>
+                        <li>✓ Review insights</li>
+                    </ul>
+                    <a href="{% url 'businesses:signup' %}" class="pricing-cta primary">Start Free Trial</a>
+                </div>
+                
+                <div class="pricing-card">
+                    <div class="plan-name">Enterprise</div>
+                    <div class="price">
+                        <span class="amount">Custom</span>
+                    </div>
+                    <ul class="features">
+                        <li>✓ Unlimited everything</li>
+                        <li>✓ Unlimited locations</li>
+                        <li>✓ API access</li>
+                        <li>✓ Dedicated support</li>
+                        <li>✓ Custom integrations</li>
+                        <li>✓ White label options</li>
+                    </ul>
+                    <a href="#" class="pricing-cta secondary">Contact Sales</a>
                 </div>
             </div>
         </div>
@@ -229,18 +396,51 @@
     <!-- CTA Section -->
     <section class="cta-section">
         <div class="cta-content">
-            <h2>Ready to Boost Your Google Reviews?</h2>
-            <p>Join hundreds of hospitality businesses already using ReviewAI</p>
+            <h2>Ready to Bridge the Review Gap?</h2>
+            <p>Help your real customers share their authentic experiences</p>
             <a href="{% url 'businesses:signup' %}" class="cta-primary">
                 Start Your Free Trial
                 <span>→</span>
             </a>
+            <p class="cta-disclaimer">
+                No credit card required • 10-minute setup • 100% authentic reviews
+            </p>
         </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
-        <p>&copy; 2024 ReviewAI. All rights reserved. Made with ❤️ for hospitality businesses.</p>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Product</h4>
+                <a href="#how">How it Works</a>
+                <a href="#pricing">Pricing</a>
+                <a href="{% url 'businesses:login' %}">Sign In</a>
+            </div>
+            <div class="footer-section">
+                <h4>Company</h4>
+                <a href="#">About</a>
+                <a href="#">Blog</a>
+                <a href="#">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">FTC Compliance</a>
+            </div>
+            <div class="footer-section">
+                <h4>Trust</h4>
+                <p class="footer-trust">
+                    ✅ FTC Compliant<br>
+                    ✅ No Fake Reviews<br>
+                    ✅ 100% Authentic
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 ReviewAI. Built with integrity for the hospitality industry.</p>
+        </div>
     </footer>
 
     <!-- JS -->
@@ -250,17 +450,16 @@
         faqItems.forEach(item => {
             const question = item.querySelector('.faq-question');
             question.addEventListener('click', () => {
-                // Close other items
                 faqItems.forEach(otherItem => {
                     if (otherItem !== item) {
                         otherItem.classList.remove('active');
                     }
                 });
-                // Toggle current item
                 item.classList.toggle('active');
             });
         });
         
+        // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -274,6 +473,7 @@
             });
         });
 
+        // Intersection Observer for animations
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -288,7 +488,7 @@
             });
         }, observerOptions);
 
-        document.querySelectorAll('.review-card, .stat-item, .qr-card').forEach(el => {
+        document.querySelectorAll('.trust-card, .testimonial, .pricing-card, .demo-step').forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(20px)';
             el.style.transition = 'all 0.6s ease-out';
