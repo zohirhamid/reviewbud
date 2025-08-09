@@ -35,6 +35,7 @@ body {
   line-height: 1.6;
 }
 
+
 /* Layout */
 .dashboard-container {
   display: flex;
@@ -54,6 +55,14 @@ body {
   z-index: 20;
   box-shadow: 2px 0 16px rgba(0, 0, 0, 0.03);
 }
+
+.sidebar-nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 
 .logo {
   display: flex;
@@ -81,13 +90,6 @@ body {
   background: var(--gradient-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-}
-
-.sidebar-nav {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
 }
 
 .nav-link {
@@ -133,11 +135,7 @@ body {
   height: 24px;
 }
 
-.sidebar-bottom {
-  margin-top: auto;
-  padding-top: 2rem;
-  border-top: 1px solid var(--border);
-}
+
 
 .logout-link {
   color: var(--secondary);
@@ -532,3 +530,5 @@ body {
     gap: 0.5rem;
   }
 }
+
+
