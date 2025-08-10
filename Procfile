@@ -1,0 +1,1 @@
+web: gunicorn quickrate.wsgi --log-file -
