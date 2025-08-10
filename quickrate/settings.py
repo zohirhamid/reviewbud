@@ -6,6 +6,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-gx_!+o%_@jo9+%(1f+4uiyh24$wj50ghwiz5=l(jpv9=&ah+=*'
 
+STRIPE_PUBLISHABLE_KEY = 'pk_test_51RuLGJJTzdfCaExUPqgVSTYqWS1vsRO1VtUEB7Yvrn80zY1K3TZ5i5dIg46BS31qRCXlVetKGDnLPDZNSAhyvByb00Dzpp9RrS'
+STRIPE_SECRET_KEY = 'sk_test_51RuLGJJTzdfCaExUC8Skhd0gwFBMmfOwz7i5A2y7oObLXmvzQxMv69arahl0yBm8CyuW2MeDBIAHVsJYqh3MzHtu00AUk649ct'
+
 DEBUG = True
 ALLOWED_HOSTS = []
 
@@ -113,3 +116,12 @@ USE_OPENAI_API = config('USE_OPENAI_API', default=False, cast=bool)
 
 # Google Places API key
 GOOGLE_PLACES_API_KEY = config('GOOGLE_PLACES_API_KEY', default='AIzaSyBFSrkWWpUl3sqktRtqBEOFNE6lxhoWkdU')
+
+# Stripe integration
+STRIPE_PUBLISHABLE_KEY = 'pk_test_51RuLGJJTzdfCaExUPqgVSTYqWS1vsRO1VtUEB7Yvrn80zY1K3TZ5i5dIg46BS31qRCXlVetKGDnLPDZNSAhyvByb00Dzpp9RrS'
+STRIPE_SECRET_KEY = 'sk_test_51RuLGJJTzdfCaExUC8Skhd0gwFBMmfOwz7i5A2y7oObLXmvzQxMv69arahl0yBm8CyuW2MeDBIAHVsJYqh3MzHtu00AUk649ct'
+
+STRIPE_PRICE_IDS = {
+    'pro': 'price_1RuZIUJTzdfCaExUmp5PNK8y',
+    'enterprise': 'price_1RuZJcJTzdfCaExUfrUTzMcp',
+}

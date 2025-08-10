@@ -1,4 +1,3 @@
-# businesses/urls.py
 from django.urls import path
 from . import views
 
@@ -23,4 +22,9 @@ urlpatterns = [
 
     # settings
     path('settings/', views.settings_view, name='settings'),
+
+    # Stripe Checkout URLs
+    #path('checkout/<str:plan>/', views.checkout_view, name='checkout'),
+    #path('checkout/success/', views.checkout_success, name='checkout_success'),
+    #path('checkout/cancel/', views.checkout_cancel, name='checkout_cancel'),
 ]

@@ -156,6 +156,51 @@
             {% endif %}
           </div>
 
+          <!-- Subscription Status Card -->
+          <div class="business-card">
+            <div class="card-header">
+              <div class="business-info">
+                <h3>Current Plan: {{ user.subscription_plan|title }}</h3>
+                <p class="address">
+                  {% if user.subscription_plan == 'free' %}
+                    {{ user.businesses.count }}/{{ user.get_business_limit }} businesses used
+                  {% elif user.subscription_plan == 'pro' %}
+                    {{ user.businesses.count }}/{{ user.get_business_limit }} businesses used
+                  {% else %}
+                    Unlimited businesses
+                  {% endif %}
+                </p>
+              </div>
+              <span class="status-badge">{{ user.subscription_status|title }}</span>
+            </div>
+            
+            {% if user.subscription_plan == 'free' %}
+              <div class="business-actions">
+                <a href="{% url 'businesses:checkout' plan='pro' %}" class="btn btn-primary">
+                  Upgrade to Pro - $29/month
+                </a>
+                <a href="{% url 'businesses:checkout' plan='enterprise' %}" class="btn btn-outline">
+                  Enterprise - $99/month
+                </a>
+              </div>
+            {% elif user.subscription_plan == 'pro' %}
+              <div class="business-actions">
+                <a href="{% url 'businesses:checkout' plan='enterprise' %}" class="btn btn-primary">
+                  Upgrade to Enterprise - $99/month
+                </a>
+                <a href="{% url 'businesses:settings' %}" class="btn btn-outline">
+                  Manage Subscription
+                </a>
+              </div>
+            {% else %}
+              <div class="business-actions">
+                <a href="{% url 'businesses:settings' %}" class="btn btn-outline">
+                  Manage Subscription
+                </a>
+              </div>
+            {% endif %}
+          </div>
+
           <!-- Account Actions -->
           <div class="business-card">
             <div class="card-header">
