@@ -129,11 +129,11 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 # API Configuration - Remove the duplicate OPENAI_API_KEY line
-OPENAI_API_KEY = config('OPENAI_API_KEY', default='')
-USE_OPENAI_API = config('USE_OPENAI_API', default=False, cast=bool)
+#OPENAI_API_KEY = config('OPENAI_API_KEY', default='')
+#USE_OPENAI_API = config('USE_OPENAI_API', default=False, cast=bool)
 
 # Google Places API key
-GOOGLE_PLACES_API_KEY = config('GOOGLE_PLACES_API_KEY', default='AIzaSyBFSrkWWpUl3sqktRtqBEOFNE6lxhoWkdU')
+#GOOGLE_PLACES_API_KEY = config('GOOGLE_PLACES_API_KEY', default='AIzaSyBFSrkWWpUl3sqktRtqBEOFNE6lxhoWkdU')
 
 # Static files for production
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
