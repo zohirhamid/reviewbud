@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="{% static 'css/landing_page.css' %}">
 </head>
 <body>
+    <div class="demo-banner">
+    ⚠️ <strong>PORTFOLIO DEMO</strong> ⚠️ - This is a portfolio project. Not ready for public use.
+    </div>
     <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-container">
@@ -81,8 +84,7 @@
                     <p>of customers want to leave reviews but don't know what to write</p>
                 </div>
                 <p class="problem-text">
-                    Your happy customers leave your restaurant satisfied but never write that review. 
-                    Not because they don't want to – they just don't know how to articulate their experience.
+                    Happy customers leave satisfied but often skip writing a review, not out of unwillingness, but because they struggle to express their experience.
                 </p>
             </div>
             <div class="solution-content">
@@ -335,60 +337,59 @@
     <section id="pricing" class="pricing-section">
         <div class="pricing-container">
             <div class="section-header">
-                <h2>Simple, Transparent Pricing</h2>
-                <p class="section-subtitle">Start free, upgrade when you see results</p>
+                <h2>Simple Pricing</h2>
+                <p class="section-subtitle">Start free, upgrade anytime</p>
             </div>
             
             <div class="pricing-cards">
+                <!-- Free Plan -->
                 <div class="pricing-card">
-                    <div class="plan-name">Starter</div>
+                    <div class="plan-name">Free</div>
                     <div class="price">
                         <span class="currency">$</span>
                         <span class="amount">0</span>
                         <span class="period">/month</span>
                     </div>
                     <ul class="features">
-                        <li>✓ Up to 10 reviews/month</li>
-                        <li>✓ 1 location</li>
+                        <li>✓ 1 business</li>
                         <li>✓ Basic analytics</li>
                         <li>✓ Email support</li>
                     </ul>
-                    <a href="{% url 'businesses:signup' %}" class="pricing-cta secondary">Start Free</a>
+                    <a href="{% url 'businesses:signup' %}" class="pricing-cta secondary">Get Started</a>
                 </div>
                 
+                <!-- Pro Plan -->
                 <div class="pricing-card featured">
-                    <div class="badge">Most Popular</div>
-                    <div class="plan-name">Professional</div>
+                    <div class="badge">Popular</div>
+                    <div class="plan-name">Pro</div>
                     <div class="price">
                         <span class="currency">$</span>
-                        <span class="amount">49</span>
+                        <span class="amount">29</span>
                         <span class="period">/month</span>
                     </div>
                     <ul class="features">
-                        <li>✓ Unlimited reviews</li>
-                        <li>✓ Up to 3 locations</li>
+                        <li>✓ 5 businesses</li>
                         <li>✓ Advanced analytics</li>
                         <li>✓ Priority support</li>
-                        <li>✓ Custom QR designs</li>
-                        <li>✓ Review insights</li>
                     </ul>
-                    <a href="{% url 'businesses:signup' %}" class="pricing-cta primary">Start Free Trial</a>
+                    <a href="{% url 'businesses:signup' %}" class="pricing-cta primary">Start Trial</a>
                 </div>
                 
+                <!-- Enterprise Plan -->
                 <div class="pricing-card">
                     <div class="plan-name">Enterprise</div>
                     <div class="price">
-                        <span class="amount">Custom</span>
+                        <span class="currency">$</span>
+                        <span class="amount">99</span>
+                        <span class="period">/month</span>
                     </div>
                     <ul class="features">
-                        <li>✓ Unlimited everything</li>
-                        <li>✓ Unlimited locations</li>
+                        <li>✓ Unlimited businesses</li>
                         <li>✓ API access</li>
                         <li>✓ Dedicated support</li>
-                        <li>✓ Custom integrations</li>
-                        <li>✓ White label options</li>
                     </ul>
-                    <a href="#" class="pricing-cta secondary">Contact Sales</a>
+                    <a href="{% url 'businesses:signup' %}" class="pricing-cta secondary">Start Trial</a>
+
                 </div>
             </div>
         </div>
@@ -404,44 +405,14 @@
                 <span>→</span>
             </a>
             <p class="cta-disclaimer">
-                No credit card required • 10-minute setup • 100% authentic reviews
+                10-minute setup • 100% authentic reviews
             </p>
         </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Product</h4>
-                <a href="#how">How it Works</a>
-                <a href="#pricing">Pricing</a>
-                <a href="{% url 'businesses:login' %}">Sign In</a>
-            </div>
-            <div class="footer-section">
-                <h4>Company</h4>
-                <a href="#">About</a>
-                <a href="#">Blog</a>
-                <a href="#">Contact</a>
-            </div>
-            <div class="footer-section">
-                <h4>Legal</h4>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-                <a href="#">FTC Compliance</a>
-            </div>
-            <div class="footer-section">
-                <h4>Trust</h4>
-                <p class="footer-trust">
-                    ✅ FTC Compliant<br>
-                    ✅ No Fake Reviews<br>
-                    ✅ 100% Authentic
-                </p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 ReviewAI. Built with integrity for the hospitality industry.</p>
-        </div>
+        <p>&copy; 2024 ReviewAI. All rights reserved. Made with ❤️ for hospitality businesses.</p>
     </footer>
 
     <!-- JS -->

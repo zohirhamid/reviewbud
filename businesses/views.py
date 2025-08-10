@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from businesses.forms import SignupForm
 from businesses.models import Business, ReviewLink, CustomerReview
 from django.contrib.auth import authenticate, login, logout
@@ -15,6 +16,11 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.models import User
 from .forms import LoginForm, SignupForm, BusinessForm, CustomerReviewForm, ProfileForm
+import stripe
+
+# Configure Stripe
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
 
 def landing_page(request):
     if request.user.is_authenticated:
@@ -103,7 +109,7 @@ def create_business(request):
 
     return render(request, 'businesses/create_business.html', {
         'form': form,
-        'GOOGLE_PLACES_API_KEY': settings.GOOGLE_PLACES_API_KEY,  # or pass from settings
+        'GOOGLE_PLACES_API_KEY': settings.GOOGLE_PLACES_API_KEY, 
     })
 
 
@@ -232,6 +238,6 @@ def settings_view(request):
         'user': request.user,
         'profile_form': profile_form,
         'password_form': password_form,
-        'has_password': has_password,  # Pass this to template
+        'has_password': has_password,
     }
     return render(request, 'businesses/settings.html', context)

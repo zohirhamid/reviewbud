@@ -532,3 +532,89 @@ body {
 }
 
 
+/* Add to your dashboard.css */
+
+/* Checkout Success/Cancel Pages */
+.success-container,
+.cancel-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 2rem;
+}
+
+.success-card,
+.cancel-card {
+  background: var(--surface, #ffffff);
+  border-radius: 16px;
+  padding: 3rem;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
+}
+
+.success-icon,
+.cancel-icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+}
+
+.success-card h2,
+.cancel-card h2 {
+  color: var(--text-dark, #1e293b);
+  margin-bottom: 1rem;
+  font-size: 1.75rem;
+}
+
+.success-card p,
+.cancel-card p {
+  color: var(--text-gray, #64748b);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.next-steps {
+  background: var(--bg-light, #f8fafc);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  text-align: left;
+}
+
+.next-steps h3 {
+  color: var(--text-dark, #1e293b);
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+
+.next-steps ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.next-steps li {
+  color: var(--text-gray, #64748b);
+  margin-bottom: 0.5rem;
+  padding-left: 1rem;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .success-card,
+  .cancel-card {
+    padding: 2rem 1.5rem;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+}
