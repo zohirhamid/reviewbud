@@ -14,12 +14,9 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-from django.contrib.auth.models import User
 from .forms import LoginForm, SignupForm, BusinessForm, CustomerReviewForm, ProfileForm
-import stripe
-
-# Configure Stripe
-stripe.api_key = settings.STRIPE_SECRET_KEY
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 
 def landing_page(request):
