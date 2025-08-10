@@ -6,11 +6,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-gx_!+o%_@jo9+%(1f+4uiyh24$wj50ghwiz5=l(jpv9=&ah+=*'
 
-STRIPE_PUBLISHABLE_KEY = 'pk_test_51RuLGJJTzdfCaExUPqgVSTYqWS1vsRO1VtUEB7Yvrn80zY1K3TZ5i5dIg46BS31qRCXlVetKGDnLPDZNSAhyvByb00Dzpp9RrS'
-STRIPE_SECRET_KEY = 'sk_test_51RuLGJJTzdfCaExUC8Skhd0gwFBMmfOwz7i5A2y7oObLXmvzQxMv69arahl0yBm8CyuW2MeDBIAHVsJYqh3MzHtu00AUk649ct'
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '.railway.app',
+    'quickratedb.railway.internal',
+]
 
 # Application definition
 SITE_ID = 1
@@ -44,6 +47,7 @@ SOCIALACCOUNTS_PROVIDERS = {
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -71,16 +75,30 @@ TEMPLATES = [
     },
 ]
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'quickratedb',
-        'USER': 'quickrateuser',
-        'PASSWORD': '011936',
-        'HOST': 'localhost',
-        'PORT': '5432',
+if os.environ.get('PGDATABASE'):
+    # Production database (Railway)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get('PGDATABASE'),
+            'USER': os.environ.get('PGUSER'),
+            'PASSWORD': os.environ.get('PGPASSWORD'),
+            'HOST': os.environ.get('PGHOST'),
+            'PORT': os.environ.get('PGPORT'),
+        }
     }
-}
+else:
+    # Local development database (keep your current settings)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'quickratedb',
+            'USER': 'quickrateuser',
+            'PASSWORD': '011936',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
+    }
 
 
 # Custom User Model (IMPORTANT!)
@@ -117,11 +135,10 @@ USE_OPENAI_API = config('USE_OPENAI_API', default=False, cast=bool)
 # Google Places API key
 GOOGLE_PLACES_API_KEY = config('GOOGLE_PLACES_API_KEY', default='AIzaSyBFSrkWWpUl3sqktRtqBEOFNE6lxhoWkdU')
 
-# Stripe integration
-STRIPE_PUBLISHABLE_KEY = 'pk_test_51RuLGJJTzdfCaExUPqgVSTYqWS1vsRO1VtUEB7Yvrn80zY1K3TZ5i5dIg46BS31qRCXlVetKGDnLPDZNSAhyvByb00Dzpp9RrS'
-STRIPE_SECRET_KEY = 'sk_test_51RuLGJJTzdfCaExUC8Skhd0gwFBMmfOwz7i5A2y7oObLXmvzQxMv69arahl0yBm8CyuW2MeDBIAHVsJYqh3MzHtu00AUk649ct'
+# Static files for production
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-STRIPE_PRICE_IDS = {
-    'pro': 'price_1RuZIUJTzdfCaExUmp5PNK8y',
-    'enterprise': 'price_1RuZJcJTzdfCaExUfrUTzMcp',
-}
+# Security settings for production
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
