@@ -17,24 +17,30 @@ def generate_review_with_ai(rating, feedback, business_name, tags=""):
         prompt = create_review_prompt(rating, feedback, business_name, tags)
         
         response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4-turbo-preview",
             messages=[
                 {
-                    "role": "system", 
+                    "role": "system",
                     "content": "You are a helpful assistant that writes authentic, natural-sounding Google reviews based on customer feedback. Keep reviews conversational, genuine, and between 35-55 words. Avoid overly promotional language."
                 },
                 {
-                    "role": "user", 
+                    "role": "user",
                     "content": prompt
                 }
             ],
-            max_tokens=55,
-            temperature=0.7,
-            presence_penalty=0.1,
-            frequency_penalty=0.1
+            max_tokens=75,
+            temperature=0.8,
+            presence_penalty=0.3,
+            frequency_penalty=0.3,
+            top_p=0.95
         )
         
-        generated_review = response.choices[0].message.content.strip()
+        # Fix: Add None check before calling strip()
+        content = response.choices[0].message.content
+        if content is None:
+            raise ValueError("OpenAI API returned None content")
+        generated_review = content.strip()
+        
         logger.info("Successfully generated AI review")
         return generated_review, "ChatGPT API"
         
@@ -42,47 +48,28 @@ def generate_review_with_ai(rating, feedback, business_name, tags=""):
         logger.error(f"Error generating AI review: {str(e)}")
         # Fallback to simple template if API fails
         review = generate_fallback_review(rating, feedback, business_name, tags)
-        return review, "Fallback (API Error)"  # <-- And this too!
+        return review, "Fallback (API Error)"
+    
 
 def create_review_prompt(rating, feedback, business_name, tags):
-    """
-    Create a structured prompt for ChatGPT based on customer input
-    """
-    # Convert rating to descriptive terms
-    rating_descriptions = {
-        1: "very disappointed and unsatisfied",
-        2: "somewhat disappointed", 
-        3: "okay/average experience",
-        4: "good and satisfied",
-        5: "excellent and very satisfied"
-    }
-    """
-    get(): a function that looks for a value in a desc using a key (first param)
-    and returns it if found
-    if not returns a default value (second param)
-    """
-    rating_desc = rating_descriptions.get(rating, "satisfied")
-    
+    prompt = f"""Generate a natural Google review for {business_name}.
 
-    # Creating a prompt
-    prompt = f"""Write a natural Google review for {business_name}. 
-    Customer rating: {rating}/5 stars ({rating_desc})
-    Customer feedback: "{feedback}"
-    """
-    
-    if tags: # if we have tags input add them
-        prompt += f"Positive aspects mentioned: {tags}\n"
-    
-    prompt += f"""
-        Requirements:
-        - Write in first person as if the customer wrote it
-        - Sound natural and conversational
-        - Include specific details from the feedback
-        - Keep it between 30-50 words
-        - Match the tone to the {rating}/5 star rating
-        - Don't mention that this is AI-generated
-        - Make it sound like a real customer experience
-        """
+    Context:
+    - Overall rating: {rating}/5 stars
+    - Customer's actual feedback: "{feedback}"
+    - Key highlights: {tags if tags else 'None specified'}
+
+    Instructions:
+    1. Incorporate specific details from the feedback naturally
+    2. Match the emotional tone to the {rating}-star rating
+    3. Include 1-2 specific details that make it feel authentic
+    4. Avoid generic phrases like "great place" or "nice restaurant"
+    5. Write as if recommending (or warning) a friend
+    6. Length: 35-50 words
+    7. Don't use exclamation marks excessively
+    8. Include subtle imperfections for authenticity (e.g., minor critiques even in positive reviews)
+
+    Generate the review:"""
     
     return prompt
 
@@ -110,22 +97,4 @@ def generate_fallback_review(rating, feedback, business_name, tags=""):
         ]
     
     import random
-    return random.choice(templates)  # <-- Just return the review, not a tuple
-
-def test_ai_service():
-    """
-    Test function to verify AI service is working
-    """
-    try:
-        test_review = generate_review_with_ai(
-            rating=5,
-            feedback="The food was amazing and service was super fast",
-            business_name="Mario's Pizza",
-            tags="Great value, Friendly staff"
-        )
-        print("AI Service Test Successful!")
-        print(f"Generated review: {test_review}")
-        return True
-    except Exception as e:
-        print(f"AI Service Test Failed: {str(e)}")
-        return False
+    return random.choice(templates)
