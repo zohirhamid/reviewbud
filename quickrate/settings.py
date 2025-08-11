@@ -1,6 +1,7 @@
 from pathlib import Path
 import os
-from decouple import config  # Move this to the top
+from decouple import config 
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -77,20 +78,26 @@ TEMPLATES = [
     },
 ]
 
-if os.environ.get('PGDATABASE'):
-    # Production database (Railway)
+# Database Configuration
+DATABASE_URL = os.environ.get('DATABASE_URL')
+
+if DATABASE_URL:
+    # Production database (Railway) - parse DATABASE_URL manually
+    import urllib.parse as urlparse
+    
+    url = urlparse.urlparse(DATABASE_URL)
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ.get('PGDATABASE'),
-            'USER': os.environ.get('PGUSER'),
-            'PASSWORD': os.environ.get('PGPASSWORD'),
-            'HOST': os.environ.get('PGHOST'),
-            'PORT': os.environ.get('PGPORT'),
+            'NAME': url.path[1:],  # Remove leading slash
+            'USER': url.username,
+            'PASSWORD': url.password,
+            'HOST': url.hostname,
+            'PORT': url.port,
         }
     }
 else:
-    # Local development database (keep your current settings)
+    # Local development database
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
