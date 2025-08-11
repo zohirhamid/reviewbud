@@ -14,6 +14,9 @@ except ImportError:
     pass
 
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY', '')
+if not OPENAI_API_KEY:
+    import logging
+    logging.warning("OPENAI_API_KEY is not configured. AI review generation will use fallback templates.")
 
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
