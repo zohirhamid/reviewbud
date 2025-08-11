@@ -174,3 +174,14 @@ if not DEBUG:
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
+# Force HTTPS for OAuth redirects
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+
+# This tells Django it's behind a proxy using HTTPS
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Additional security settings for production
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
