@@ -36,8 +36,12 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google'
 ]
 
-SOCIALACCOUNTS_PROVIDERS = {
+SOCIALACCOUNT_PROVIDERS = {
     'google': {
+        'APP': {
+            'client_id': os.environ.get('GOOGLE_OAUTH_CLIENT_ID'),
+            'secret': os.environ.get('GOOGLE_OAUTH_CLIENT_SECRET'),
+        },
         'SCOPE': [
             'profile',
             'email',
@@ -45,7 +49,6 @@ SOCIALACCOUNTS_PROVIDERS = {
         'AUTH_PARAMS': {'access_type': 'online'}
     }
 }
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
