@@ -17,7 +17,7 @@ def generate_review_with_ai(rating, feedback, business_name, tags=""):
         prompt = create_review_prompt(rating, feedback, business_name, tags)
         
         response = client.chat.completions.create(
-            model="gpt-4-turbo-preview",
+            model="gpt-4o-mini",
             messages=[
                 {
                     "role": "system",
