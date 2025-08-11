@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'businesses',
-    #'reviews',
+    'reviews',
 
     'django.contrib.sites',
     'allauth',
