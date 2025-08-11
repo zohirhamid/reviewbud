@@ -36,6 +36,14 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google'
 ]
 
+# Add this near your other security settings
+CSRF_TRUSTED_ORIGINS = [
+    'https://quickrate.up.railway.app',
+    'http://127.0.0.1:8000',
+    'http://localhost:8000',
+]
+
+
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'APP': {
