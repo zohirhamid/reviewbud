@@ -67,7 +67,8 @@ SOCIALACCOUNT_PROVIDERS = {
         ],
         'AUTH_PARAMS': {
             'access_type': 'online',
-            'prompt': 'select_account'
+            'prompt': 'select_account',  # This helps prevent conflicts
+            'authuser': '0'  # Force primary account
         }
     }
 }
@@ -215,7 +216,7 @@ ACCOUNT_UNIQUE_EMAIL = True
 # Social account settings
 SOCIALACCOUNT_AUTO_SIGNUP = True 
 SOCIALACCOUNT_EMAIL_VERIFICATION = "none"
-SOCIALACCOUNT_LOGIN_ON_GET = False 
+SOCIALACCOUNT_LOGIN_ON_GET = True 
 SOCIALACCOUNT_STORE_TOKENS = True
 
 # Handle account conflicts
