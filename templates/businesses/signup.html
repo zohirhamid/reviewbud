@@ -16,6 +16,16 @@
                 <p>Start collecting reviews for your business</p>
             </div>
 
+
+            <a href="{% provider_login_url 'google' %}" class="google-btn">
+                <span>🔑</span> Sign up with Google
+            </a>
+
+            <!-- Google Signup Option (Primary) -->
+             <div class="divider">
+                <span>or</span>
+            </div>
+
             <!-- Traditional Signup Form -->
             <form method="post" class="auth-form">
                 {% csrf_token %}
@@ -58,15 +68,6 @@
 
                 <button type="submit" class="auth-btn">Create Account with Email</button>
             </form>
-
-            <!-- Google Signup Option (Primary) -->
-             <div class="divider">
-                <span>or</span>
-            </div>
-            
-            <a href="{% provider_login_url 'google' %}" class="google-btn">
-                <span>🔑</span> Sign up with Google
-            </a>
 
             <div class="auth-footer">
                 <p>Already have an account? <a href="{% url 'businesses:login' %}">Sign in here</a></p>
