@@ -11,10 +11,20 @@
 <body>
   <div class="dashboard-container">
     {% include 'businesses/sidebar.html' %}
+    
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
 
     <main class="main-content">
       <div class="top-navbar">
-        <div class="greeting">Account Settings</div>
+        <div class="navbar-left">
+          <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <div class="greeting">Account Settings</div>
+        </div>
         <div class="profile-picture">
           <img src="{% static 'images/Profile-sample.png' %}" alt="Profile">
         </div>
@@ -224,6 +234,24 @@
   </div>
 
   <script>
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const sidebar = document.querySelector('.sidebar');
+    const mobileOverlay = document.getElementById('mobileOverlay');
+    
+    mobileMenuBtn.addEventListener('click', function() {
+      sidebar.classList.toggle('open');
+      mobileOverlay.classList.toggle('active');
+      this.classList.toggle('active');
+    });
+    
+    mobileOverlay.addEventListener('click', function() {
+      sidebar.classList.remove('open');
+      mobileOverlay.classList.remove('active');
+      mobileMenuBtn.classList.remove('active');
+    });
+
+    // Delete account confirmation
     function confirmDelete() {
       if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
         if (prompt('Type "DELETE" to confirm:') === 'DELETE') {
