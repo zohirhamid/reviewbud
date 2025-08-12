@@ -24,6 +24,9 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '.railway.app',
+    'reviewbud.co',
+    'www.reviewbud.co',
+    '.reviewbud.co'
     'quickratedb.railway.internal',
 ]
 
