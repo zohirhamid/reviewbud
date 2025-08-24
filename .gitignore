@@ -2,4 +2,19 @@ venv/
 __pycache__/
 *.pyc
 .env
+
+# Additional Django/Python items
+*.sqlite3
+db.sqlite3
+*.log
+media/
+staticfiles/
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Node modules (you already have this)
 node_modules/
