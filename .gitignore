@@ -16,5 +16,5 @@ staticfiles/
 .DS_Store
 Thumbs.db
 
-# Node modules (you already have this)
+# Node modules 
 node_modules/

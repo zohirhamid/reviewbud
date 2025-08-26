@@ -1,30 +1,41 @@
 from pathlib import Path
 import environ
 import os
+import dj_database_url
+from environ import Env
+from typing import Any, Dict
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-env = environ.Env()
-env.read_env(BASE_DIR / ".env")
+env = Env()
+Env.read_env()
+ENVIRONMENT = env('ENVIRONMENT', default='production') # type: ignore
 
 SITE_ID = 1
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-replace-this-with-a-real-secret-key'
+SECRET_KEY = env('SECRET_KEY')
 
+GOOGLE_PLACES_API_KEY = env("GOOGLE_PLACES_API_KEY")
+
+DATABASES: Dict[str, Dict[str, Any]] = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if ENVIRONMENT == 'development':
+    DEBUG = True
+else:
+    DEBUG = False
 
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    '.railway.app',
     'reviewbud.co',
     'www.reviewbud.co',
-    '.reviewbud.co'
-    'quickratedb.railway.internal',
 ]
 
 
@@ -36,7 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    "django.contrib.staticfiles",
+    'django.contrib.staticfiles',
+    'admin_honeypot',
 
     'businesses',
     'reviews',
@@ -51,8 +63,8 @@ INSTALLED_APPS = [
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'APP': {
-            'client_id': env('OAUTH_GOOGLE_CLIENT_ID'),
-            'secret': env('OAUTH_GOOGLE_SECRET'),
+            #'client_id': env('OAUTH_GOOGLE_CLIENT_ID'),
+            #'secret': env('OAUTH_GOOGLE_SECRET'),
         }
     }
 }
@@ -100,18 +112,16 @@ WSGI_APPLICATION = 'reviewbud.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# Local development database
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'quickratedb',
-        'USER': 'quickrateuser',
-        'PASSWORD': '011936',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
+POSTGRES_LOCALLY = False
+if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
+    DATABASES['default'] = dj_database_url.parse(env('DATABASE_URL')) # type: ignore
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -161,6 +171,6 @@ LOGOUT_REDIRECT_URL = '/'
 SOCIALACCOUNT_LOGIN_ON_GET = True
 SOCIALACCOUNT_AUTO_SIGNUP = True
 ACCOUNT_UNIQUE_EMAIL = True
-SOCIALACCOUNT_EMAIL_AUTHENTIFICATION = True
-SOCIALACCOUNT_EMAIL_AUTHENTIFICATION_AUTO_CONNECT = True
+SOCIALACCOUNT_EMAIL_AUTHENTICATION = True
+SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
 SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
