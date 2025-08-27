@@ -18,6 +18,8 @@ SITE_ID = 1
 SECRET_KEY = env('SECRET_KEY')
 
 GOOGLE_PLACES_API_KEY = env("GOOGLE_PLACES_API_KEY")
+OPENAI_API_KEY = env("OPENAI_API_KEY")
+USE_OPENAI_API = env("USE_OPENAI_API")
 
 DATABASES: Dict[str, Dict[str, Any]] = {
     'default': {
