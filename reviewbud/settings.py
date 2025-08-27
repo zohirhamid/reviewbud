@@ -38,6 +38,7 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     'reviewbud.co',
     'www.reviewbud.co',
+    'reviewbud-1.onrender.com',
 ]
 
 
