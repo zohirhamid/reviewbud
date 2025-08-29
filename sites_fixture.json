@@ -1,0 +1,26 @@
+[
+{
+  "model": "sites.site",
+  "pk": 1,
+  "fields": {
+    "domain": "127.0.0.1:8000",
+    "name": "localhost"
+  }
+},
+{
+  "model": "sites.site",
+  "pk": 3,
+  "fields": {
+    "domain": "reviewbud.co",
+    "name": "reviewbud"
+  }
+},
+{
+  "model": "sites.site",
+  "pk": 4,
+  "fields": {
+    "domain": "www.reviewbud.co",
+    "name": "reviewbud2"
+  }
+}
+]
