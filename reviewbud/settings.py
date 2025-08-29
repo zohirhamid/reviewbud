@@ -21,12 +21,18 @@ GOOGLE_PLACES_API_KEY = env("GOOGLE_PLACES_API_KEY")
 OPENAI_API_KEY = env("OPENAI_API_KEY")
 USE_OPENAI_API = env("USE_OPENAI_API")
 
+OAUTH_GOOGLE_CLIENT_ID = env("OAUTH_GOOGLE_CLIENT_ID")
+OAUTH_GOOGLE_SECRET = env("OAUTH_GOOGLE_SECRET")
+
+'''
 DATABASES: Dict[str, Dict[str, Any]] = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+'''
+
 # SECURITY WARNING: don't run with debug turned on in production!
 if ENVIRONMENT == 'development':
     DEBUG = True
@@ -55,6 +61,7 @@ INSTALLED_APPS = [
 
     'businesses',
     'reviews',
+    'users',
 
     'django.contrib.sites',
     'allauth',
@@ -65,14 +72,16 @@ INSTALLED_APPS = [
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
-        'APP': {
-            #'client_id': env('OAUTH_GOOGLE_CLIENT_ID'),
-            #'secret': env('OAUTH_GOOGLE_SECRET'),
-        }
+        'SCOPE': [
+            "profile",
+            "email"
+        ],
+        "AUTH_PARAMS": {"access_type": "online"}
     }
 }
 
-AUTH_USER_MODEL = 'businesses.User'
+AUTH_USER_MODEL = 'users.User'
+
 
 
 MIDDLEWARE = [
@@ -83,7 +92,6 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 
-    # Required by django-allauth
     'allauth.account.middleware.AccountMiddleware',
 
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -181,3 +189,10 @@ ACCOUNT_UNIQUE_EMAIL = True
 SOCIALACCOUNT_EMAIL_AUTHENTICATION = True
 SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
 SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
+
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
+#ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"

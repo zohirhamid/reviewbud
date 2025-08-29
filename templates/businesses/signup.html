@@ -15,6 +15,13 @@
                 <h1>Create Account</h1>
                 <p>Start collecting reviews for your business</p>
             </div>
+            <a href="{% provider_login_url 'google' %}" class="google-btn">
+                <span>🔑</span> Continue with Google
+            </a>
+            
+            <div class="divider">
+                <span>or</span>
+            </div>
 
             <!-- Traditional Signup Form -->
             <form method="post" class="auth-form">
@@ -60,7 +67,7 @@
             </form>
 
             <div class="auth-footer">
-                <p>Already have an account? <a href="{% url 'businesses:login' %}">Sign in here</a></p>
+                <p>Already have an account? <a href="{% url 'users:login' %}">Sign in here</a></p>
             </div>
         </div>
     </div>
