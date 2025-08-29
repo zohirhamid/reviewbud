@@ -1,15 +1,7 @@
-from django.contrib.auth.models import AbstractUser
 from django.db import models
 import uuid
 from django.urls import reverse
-
-class User(AbstractUser):
-    # extend the build-in django user model by adding phone and user account date created
-    phone = models.CharField(max_length=20, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.username
+from users.models import User
 
 class Business(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='businesses')

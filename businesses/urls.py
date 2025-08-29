@@ -11,17 +11,10 @@ urlpatterns = [
     path('edit/<int:id>/', views.update_business, name='update_business'),
     path('delete/<int:id>/', views.delete_business, name='delete_business'),
     
-    # Authentication
-    path('signup/', views.signup_view, name='signup'),
-    path('login/', views.login_view, name='login'),
-    path('logout/', views.logout_view, name='logout'),
-    
     # QR code
     path('qr_code/<uuid:token>/', views.qr_code, name='qr_code'),
     path('create-qrcode/<str:token>/', views.create_qr_code_page, name='create_qr_code'),
 
-    # settings
-    path('settings/', views.settings_view, name='settings'),
 
     # Stripe Checkout URLs
     #path('checkout/<str:plan>/', views.checkout_view, name='checkout'),
