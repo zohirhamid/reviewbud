@@ -1,18 +1,11 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from django.urls import reverse
-from businesses.models import Business, ReviewLink, CustomerReview
-from django.contrib.auth import authenticate, login, logout
+from businesses.models import Business, ReviewLink
 from django.conf import settings
-from django.contrib import messages
 import qrcode
 from io import BytesIO
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-from .forms import LoginForm, SignupForm, BusinessForm, CustomerReviewForm, ProfileForm
+from .forms import BusinessForm
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
@@ -22,8 +15,6 @@ def landing_page(request):
         return redirect('businesses:dashboard')
     else:
         return render(request, 'landing_page.html')
-
-
 
 @login_required
 def dashboard(request):

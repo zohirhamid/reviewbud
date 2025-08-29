@@ -27,21 +27,21 @@
 
             <form method="post" class="auth-form">
                 {% csrf_token %}
-
+                
                 <!-- Google Places Search -->
                 <div class="form-group">
                     <label for="places-search">Search Your Business</label>
                     <input type="text" id="places-search" placeholder="Start typing your business name..." required>
                 </div>
-
+                
                 <!-- Map preview -->
                 <div id="map"></div>
-
+                
                 <!-- Hidden fields sent to Django -->
                 <input type="hidden" name="name" id="business-name">
                 <input type="hidden" name="address" id="business-address">
                 <input type="hidden" name="google_review_url" id="google-url">
-
+                
                 <button type="submit" class="auth-btn" style="margin-top: 1rem;">Add Business</button>
             </form>
 
