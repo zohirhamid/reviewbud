@@ -42,11 +42,6 @@ ReviewBud helps business owners create QR codes that customers can scan to leave
 - HTML/CSS with server-side rendering
 - Vanilla JavaScript for interactivity
 
-**Key Libraries:**
-- `qrcode==8.2` for QR code generation
-- Google OAuth integration
-- OpenAI Python SDK
-
 **Deployment:**
 - Hosted on Render.com
 - Custom domain: reviewbud.co
