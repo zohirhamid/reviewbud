@@ -9,4 +9,6 @@ urlpatterns = [
     path('reviews/', include('reviews.urls')),
 
     path("accounts/", include("allauth.urls")),
+
+    path("api/", include("businesses.api_urls")),
 ]
