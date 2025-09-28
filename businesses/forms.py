@@ -61,11 +61,10 @@ class BusinessForm(forms.ModelForm):
 class CustomerReviewForm(forms.ModelForm):
     class Meta:
         model = CustomerReview
-        fields = ['customer_name', 'rating', 'feedback']
+        fields = ['rating', 'feedback']
         widgets = {
             'rating': forms.Select(choices=CustomerReview.RATING_CHOICES),
             'feedback': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Tell us about your experience...'}),
-            'customer_name': forms.TextInput(attrs={'placeholder': 'Your name (optional)'})
         }
 
 class ProfileForm(forms.ModelForm):

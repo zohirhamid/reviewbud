@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import BusinessForm
 from django.contrib.auth import get_user_model
 User = get_user_model()
+from django.urls import reverse
 
 
 def landing_page(request):
@@ -124,7 +125,9 @@ def qr_code(request, token):
     review_link = get_object_or_404(ReviewLink, token=token)
     
     # Create full URL for QR code
-    review_url = request.build_absolute_uri(review_link.get_absolute_url())
+    review_url = request.build_absolute_uri(
+        reverse('reviews:review_form', kwargs={'token': review_link.token})
+    )
     
     # Generate QR code
     qr = qrcode.QRCode(version=1, box_size=10, border=5)
