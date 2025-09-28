@@ -1,6 +1,7 @@
 import openai
 from django.conf import settings
 import logging
+import random
 
 logger = logging.getLogger(__name__)
 
@@ -10,7 +11,7 @@ def generate_review_with_ai(rating, feedback, business_name, tags=""):
         prompt = create_review_prompt(rating, feedback, business_name, tags)
 
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="gpt-4o",
             messages=[
                 {
                     "role": "system",
@@ -18,11 +19,11 @@ def generate_review_with_ai(rating, feedback, business_name, tags=""):
                 },
                 {"role": "user", "content": prompt}
             ],
-            max_tokens=120,
-            temperature=0.9,
-            presence_penalty=0.4,
-            frequency_penalty=0.5,
-            top_p=0.95
+            max_tokens=150,
+            temperature=0.7,
+            presence_penalty=0.3,
+            frequency_penalty=0.4,
+            top_p=0.9
         )
 
         content = response.choices[0].message.content
@@ -35,8 +36,7 @@ def generate_review_with_ai(rating, feedback, business_name, tags=""):
 
     except Exception as e:
         logger.error(f"Error generating AI review: {str(e)}")
-        review = generate_fallback_review(rating, feedback, business_name, tags)
-        return review, "Fallback (API Error)"
+        return generate_fallback_review(rating, feedback, business_name, tags)
     
 
 def create_review_prompt(rating, feedback, business_name, tags):
@@ -48,44 +48,40 @@ def create_review_prompt(rating, feedback, business_name, tags):
     - Highlights: {tags if tags else 'None specified'}
 
     Review requirements:
-    - Length: 40–60 words.
-    - Sound like a real customer, not a marketer.
-    - Reference at least one *specific* aspect (e.g., service, staff, food, vibe, price, waiting time).
-    - Match tone to the rating:
-        • 5 stars → warm, detailed praise but not over the top.
-        • 4 stars → mostly positive with a minor suggestion.
-        • 3 stars → balanced mix of good and “could be better”.
-        • 1–2 stars → clear frustrations but still polite and constructive.
-    - Avoid clichés like “nice place” or “great food”.
-    - Write as if telling a friend casually.
-    - Small imperfections or hesitation words (“kind of”, “a bit”, “honestly”) make it feel more real.
+    - Length: 50–90 words (aim for realistic, medium-length reviews).
+    - Sound like a real customer talking to a friend, not a marketer.
+    - Vary the opening sentence across reviews (avoid starting with "Had a great experience..." every time).
+    - Reference at least one specific aspect: service, staff, food, drinks, atmosphere, waiting time, or price.
+    - If rating = 5 stars → warm, detailed praise with a personal touch ("will bring my family again", "perfect for date night").
+    - If rating = 4 stars → mostly positive, add a minor suggestion.
+    - If rating = 3 stars → balanced: mention both good points and what could be better.
+    - If rating = 1–2 stars → clear frustrations but stay polite and constructive.
+    - Use casual, everyday language. Small imperfections like "kind of", "a bit", or "honestly" are good for realism.
+    - Do not sound like AI. Avoid generic filler phrases like "great food" or "nice place."
 
-    Now generate the review:"""
+    Now write the review:
+    """
     return prompt
 
 
 def generate_fallback_review(rating, feedback, business_name, tags=""):
-    """
-    Fallback method if ChatGPT API fails - uses simple templates
-    """
     feedback_text = feedback.strip() if feedback else ""
-    tags_text = tags.strip() if tags else ""
+    tags_text = f" {tags.strip()}" if tags else ""
     
     if rating >= 4:
         templates = [
-            f"Had a great experience at {business_name}! {feedback_text} {tags_text} Definitely recommend this place.",
-            f"Really enjoyed my visit to {business_name}. {feedback_text} {tags_text} Will definitely be back!",
-            f"Excellent service at {business_name}. {feedback_text} {tags_text} Highly recommended!"
+            f"Had a great experience at {business_name}! {feedback_text}{tags_text} Definitely recommend this place.",
+            f"Really enjoyed my visit to {business_name}. {feedback_text}{tags_text} Will definitely be back!",
+            f"Excellent service at {business_name}. {feedback_text}{tags_text} Highly recommended!"
         ]
     elif rating == 3:
         templates = [
-            f"Decent experience at {business_name}. {feedback_text} {tags_text}",
-            f"Overall okay visit to {business_name}. {feedback_text} {tags_text}"
+            f"Decent experience at {business_name}. {feedback_text}{tags_text}",
+            f"Overall okay visit to {business_name}. {feedback_text}{tags_text}"
         ]
     else:
         templates = [
-            f"Visited {business_name}. {feedback_text} {tags_text}",
+            f"Visited {business_name}. {feedback_text}{tags_text}",
         ]
     
-    import random
     return random.choice(templates)
