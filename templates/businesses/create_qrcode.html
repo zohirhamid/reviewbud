@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>QR Code - {{ business.name }} | ReviewAI</title>
+  <title>QR Code - {{ business.name }}</title>
   <link rel="stylesheet" href="{% static 'css/create_qrcode.css' %}">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
@@ -47,8 +47,8 @@
 
         <!-- Business Name -->
         <div class="option-group">
-          <label class="option-label" for="businessName">Business Name</label>
-          <input type="text" id="businessName" class="text-input" value="My Business" onchange="updateBusinessName(this.value)">
+          <label class="option-label" for="businessName">{{ business.name }}</label>
+          <input type="text" id="businessName" class="text-input" value="{{ business.name }}" onchange="updateBusinessName(this.value)">
         </div>
 
         <!-- Tagline -->
@@ -65,7 +65,7 @@
           </div>
 
           <h1 class="tagline-text" id="tagline">Leave a review</h1>
-          <p class="business-name" id="businessTitle">My Business</p>
+          <p class="business-name" id="businessTitle">{{ business.name }}</p>
 
           <div class="google-section">
             <img src="{% static 'images/logo-google-reviews.png' %}" alt="Logo" class="google-review-logo">

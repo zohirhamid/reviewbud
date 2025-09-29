@@ -17,20 +17,11 @@ def landing_page(request):
     else:
         return render(request, 'landing_page.html')
 
-@login_required
+@login_required # only authenticated users can reach this function
 def dashboard(request):
-    if request.user.is_authenticated:
-        businesses = Business.objects.filter(owner=request.user)
-
-        for business in businesses:
-            business.get_review_link()
-    else:
-        businesses = []
+    businesses = Business.objects.filter(owner=request.user)
     
-    context = { # context is a dictionary of data u want to pass to the HTML template
-        'businesses': businesses,
-    }
-    
+    context = {'businesses': businesses,}
     return render(request, 'businesses/dashboard.html', context)
 
 @login_required
@@ -41,30 +32,19 @@ def create_business(request):
             business = form.save(commit=False)
             business.owner = request.user
             business.save()
+            business.get_review_link()
             return redirect('businesses:dashboard')
         else:
             print(form.errors)  # optional: helpful for debugging
-    else:
-        '''
-        Diplay the add business form for the first time
-        before the user fills it out to submit it.
-        '''
-        # Create an instance of BusinessForm (an empty one to be filled by client)
-        # form = BusinessForm()
-        form = BusinessForm(initial={
-            'name': '',
-            'address': '',
-            'google_review_url': '',
-        })
 
-    return render(request, 'businesses/create_business.html', {
-        'form': form,
-        'GOOGLE_PLACES_API_KEY': settings.GOOGLE_PLACES_API_KEY, 
-    })
+    return render( request, 'businesses/create_business.html',
+        { 'GOOGLE_PLACES_API_KEY': settings.GOOGLE_PLACES_API_KEY, }
+    )
 
 
-def update_business(request, id):
-    business = get_object_or_404(Business, id=id)
+@login_required  
+def business_detail(request, id):
+    business = get_object_or_404(Business, id=id, owner=request.user)
     if request.method == 'POST':
         form = BusinessForm(request.POST, instance=business)
         if form.is_valid():
@@ -72,13 +52,13 @@ def update_business(request, id):
             return redirect("businesses:dashboard")
     else:
         form = BusinessForm(instance=business)
-    
+
     context = {
-        "form": form,
-        "business": business
+        'business': business,
+        'form': form,
     }
     
-    return render(request, 'businesses/update_business.html', context)
+    return render(request, 'businesses/business_detail.html', context)
     
 @login_required
 def delete_business(request, id):
@@ -86,60 +66,31 @@ def delete_business(request, id):
         business = get_object_or_404(Business, id=id)
         business.delete()
         return redirect('businesses:dashboard')
-    # If not POST, redirect back to dashboard or detail page
     return redirect('businesses:dashboard')
-
-@login_required  
-def business_detail(request, id):
-    business = get_object_or_404(Business, id=id, owner=request.user)
-    form = BusinessForm(instance=business)
-    
-    context = {
-        'business': business,
-        'form': form,
-    }
-    
-    return render(request, 'businesses/business_detail.html', context)
 
 @login_required
 def create_qr_code_page(request, token):
-    # Retrieve the ReviewLink using token (or return 404 if not found)
     review_link = get_object_or_404(ReviewLink, token=token)
-    
-    # Retrieve the associated Business
-    business = review_link.business
-    
-    # Ensure the user owns this business (permission check)
-    if business.owner != request.user:
-        return render(request, '403.html')  # show 403 Forbidden page
-    
+    business = review_link.business # Retrieve the associated Business
+
     context = {
         'business': business,
-        'review_link': review_link,
-    }
+        'review_link': review_link, }
     
     return render(request, 'businesses/create_qrcode.html', context)
 
 def qr_code(request, token):
-    # Get the review link
     review_link = get_object_or_404(ReviewLink, token=token)
-    
-    # Create full URL for QR code
-    review_url = request.build_absolute_uri(
-        reverse('reviews:review_form', kwargs={'token': review_link.token})
-    )
-    
-    # Generate QR code
+    review_url = request.build_absolute_uri(review_link.get_absolute_url())
+
     qr = qrcode.QRCode(version=1, box_size=10, border=5)
     qr.add_data(review_url)
     qr.make(fit=True)
-    
-    # Create image
-    img = qr.make_image(fill_color="black", back_color="white")
-    
-    # Return as HTTP response
+
+    img = qr.make_image(fill_color="black", back_color="white") 
+
     buffer = BytesIO()
-    img.save(buffer, 'PNG')
+    img.save(buffer, "PNG")
     buffer.seek(0)
-    
+
     return HttpResponse(buffer.getvalue(), content_type="image/png")

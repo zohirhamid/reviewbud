@@ -35,7 +35,7 @@
 
     <!-- Edit Form Card -->
     <div class="content-wrapper">
-      <form method="POST" action="{% url 'businesses:update_business' id=business.id %}">
+      <form method="POST" action="{% url 'businesses:business_detail' id=business.id %}">
         {% csrf_token %}
         
         <div class="form-card">
