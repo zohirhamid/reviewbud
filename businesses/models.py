@@ -31,7 +31,8 @@ class Business(models.Model):
         verbose_name_plural = "businesses"
 
 class ReviewLink(models.Model):
-    """Unique link that customers use to submit reviews
+    """
+    Unique link that customers use to submit reviews
     """
     business = models.OneToOneField(Business, on_delete=models.CASCADE, related_name='review_link')
     token = models.UUIDField(default=uuid.uuid4, unique=True) # create a unique id
