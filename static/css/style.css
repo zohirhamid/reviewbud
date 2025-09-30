@@ -432,8 +432,38 @@ body {
 }
 
 .review-actions {
-    text-align: center;
+    display: flex;
+    gap: 12px;
     margin: 20px 0;
+}
+.btn-regenerate {
+    background: #f7fafc;
+    border: 1px solid #e2e8f0;
+    color: #4a5568;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+
+.btn-regenerate:hover {
+    background: #edf2f7;
+    transform: rotate(90deg);
+}
+
+.btn-regenerate:active {
+    transform: scale(0.95) rotate(90deg);
+}
+
+.btn-edit {
+    flex: 1;
 }
 
 .btn-edit {

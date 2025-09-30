@@ -63,7 +63,12 @@ class CustomerReview(models.Model):
     review_link = models.ForeignKey(ReviewLink, on_delete=models.CASCADE, related_name='reviews')
     rating = models.IntegerField(choices=RATING_CHOICES)
     feedback = models.TextField(help_text="What did you like about your experience?")
-    created_at = models.DateTimeField(auto_now_add=True)    
+    ai_review = models.TextField(blank=True, null=True)
+    ip_address = models.GenericIPAddressField(blank=True, null=True)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+
     def __str__(self):
         return f"{self.rating}★ review for {self.business.name}"
     
