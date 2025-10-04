@@ -10,5 +10,5 @@ urlpatterns = [
 
     path("accounts/", include("allauth.urls")),
 
-    path("api/", include("businesses.api_urls")),
+    path('api/', include('businesses.api_urls', namespace='businesses_api')),  # API routes
 ]

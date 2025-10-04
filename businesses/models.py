@@ -21,9 +21,13 @@ class Business(models.Model):
             defaults={'token': str(uuid.uuid4())}
         )
         return link
+<<<<<<< Updated upstream
     
     class Meta:
         verbose_name_plural = "businesses"
+=======
+
+>>>>>>> Stashed changes
 
 class ReviewLink(models.Model):
     """Unique link that customers use to submit reviews"""
