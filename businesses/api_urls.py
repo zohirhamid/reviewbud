@@ -13,6 +13,12 @@ urlpatterns = [
     # Retrieve a single business
     path('businesses/<int:id>/', api_views.BusinessDetailView.as_view(), name='business_detail_api'),
 
-    # Update or delete a business
-    path('businesses/<int:id>/update/', api_views.UpdateBusinessView.as_view(), name='update_business_api'),
+    # Access review link details
+    path('review-links/<int:id>/', api_views.ReviewLinkDetailView.as_view(), name='review_link_detail_api'),
+
+    # Customer-facing
+    path('reviews/<uuid:token>/', api_views.SubmitReviewView.as_view(), name='submit_review'),
+
+    # Owner dashboard
+    path('reviews/', api_views.ReviewListView.as_view(), name='review_list'),
 ]

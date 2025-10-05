@@ -61,6 +61,7 @@ class CustomerReview(models.Model):
     
     business = models.ForeignKey(Business, on_delete=models.CASCADE, related_name='reviews')
     review_link = models.ForeignKey(ReviewLink, on_delete=models.CASCADE, related_name='reviews')
+    
     rating = models.IntegerField(choices=RATING_CHOICES)
     feedback = models.TextField(help_text="What did you like about your experience?")
     ai_review = models.TextField(blank=True, null=True)

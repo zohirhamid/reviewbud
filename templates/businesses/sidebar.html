@@ -7,8 +7,14 @@
         <a href="{% url 'businesses:dashboard' %}" class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
           My Businesses
         </a>
+        <a href="#" class="nav-link">
+          Analytics
+        </a>
         <a href="{% url 'users:settings' %}" class="nav-link {% if request.resolver_match.url_name == 'settings' %}active{% endif %}">
           Settings
+        </a>
+        <a href="#" class="nav-link">
+          Support
         </a>
     </nav>
     <div class="sidebar-bottom">
