@@ -43,14 +43,26 @@ class LoginForm(forms.Form):
 class BusinessForm(forms.ModelForm):
     class Meta:
         model = Business
-        fields = ['name', 'address', 'google_review_url']
+        fields = ['name', 'address', 'google_review_url', 'place_id']  # include place_id
         widgets = {
             'address': forms.Textarea(attrs={'rows': 3}),
             'google_review_url': forms.URLInput(attrs={
                 'placeholder': 'https://search.google.com/local/writereview?placeid=...'
-                })
-
+            }),
+            'place_id': forms.HiddenInput(),  # hidden but validated
         }
+
+    def clean_place_id(self):
+        place_id = self.cleaned_data.get('place_id')
+        if not place_id:
+            raise forms.ValidationError("Please select your business from the autocomplete suggestions.")
+        return place_id
+
+    def clean_google_review_url(self):
+        url = self.cleaned_data.get('google_review_url')
+        if url and 'placeid=' not in url:
+            raise forms.ValidationError("Invalid Google review URL (missing 'placeid' param).")
+        return url
 
         '''
         this widget will render the HTML like this:

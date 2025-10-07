@@ -41,7 +41,9 @@
                 <input type="hidden" name="name" id="business-name">
                 <input type="hidden" name="address" id="business-address">
                 <input type="hidden" name="google_review_url" id="google-url">
-                
+                <!-- Keep only place_id -->
+                <input type="hidden" name="place_id" id="business-placeid">
+
                 <button type="submit" class="auth-btn" style="margin-top: 1rem;">Add Business</button>
             </form>
 
@@ -59,13 +61,19 @@
             const input = document.getElementById('places-search');
             const autocomplete = new google.maps.places.Autocomplete(input, {
                 types: ['establishment'],
-                fields: ['name', 'formatted_address', 'geometry', 'place_id']
+                fields: [
+                    'name',
+                    'formatted_address',
+                    'geometry',
+                    'place_id',
+                    'rating',
+                    'user_ratings_total',
+                    'types'
+                ],
             });
 
-            // Default location (center of map before user selects anything)
             const defaultLatLng = { lat: 51.5074, lng: -0.1278 }; // London
 
-            // Initialize the map
             map = new google.maps.Map(document.getElementById('map'), {
                 center: defaultLatLng,
                 zoom: 14,
@@ -85,12 +93,13 @@
                     return;
                 }
 
+                console.log(place); // for debugging
 
                 // Update hidden inputs
                 document.getElementById('business-name').value = place.name;
                 document.getElementById('business-address').value = place.formatted_address;
                 document.getElementById('google-url').value = `https://search.google.com/local/writereview?placeid=${place.place_id}`;
-
+                document.getElementById('business-placeid').value = place.place_id;
 
                 // Update map position and marker
                 map.setCenter(place.geometry.location);

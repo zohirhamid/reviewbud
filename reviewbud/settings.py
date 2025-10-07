@@ -17,12 +17,33 @@ SITE_ID = 1
 
 SECRET_KEY = env('SECRET_KEY')
 
-GOOGLE_PLACES_API_KEY = env("GOOGLE_PLACES_API_KEY")
+GOOGLE_PLACES_API_KEY = env.str("GOOGLE_PLACES_API_KEY")
+GOOGLE_PLACES_SERVER_API_KEY = env.str("GOOGLE_PLACES_SERVER_API_KEY")
+
+
 OPENAI_API_KEY = env("OPENAI_API_KEY")
 USE_OPENAI_API = env("USE_OPENAI_API")
 
 OAUTH_GOOGLE_CLIENT_ID = env("OAUTH_GOOGLE_CLIENT_ID")
 OAUTH_GOOGLE_SECRET = env("OAUTH_GOOGLE_SECRET")
+
+# Broker/Backend (use a typed accessor to satisfy stubs)
+# CELERY_BROKER_URL = env.str("REDIS_URL", default="redis://localhost:6379/0")
+CELERY_BROKER_URL = os.environ.get("REDIS_URL", "redis://localhost:6379/0")
+
+CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+CELERY_TIMEZONE = "Europe/London"
+CELERY_ENABLE_UTC = True
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True  # smoother restarts
+
+from celery.schedules import crontab
+CELERY_BEAT_SCHEDULE = {
+    "update-google-stats-daily": {
+        "task": "businesses.tasks.update_google_stats_for_all_businesses",
+        "schedule": crontab(minute="0", hour="3"),
+    },
+}
+
 
 '''
 DATABASES: Dict[str, Dict[str, Any]] = {

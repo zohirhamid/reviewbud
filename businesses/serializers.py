@@ -11,8 +11,9 @@ class BusinessSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Business
-        fields = ['id', 'name', 'address', 'google_review_url', 'review_link']
-    
+        fields = ['id', 'name', 'address', 'google_review_url', 'place_id','review_link']
+        read_only_fields = ['id']
+
     def get_review_link(self, obj):
         link = obj.get_review_link()
         return f"https://reviewbud.co/review/{link.token}"

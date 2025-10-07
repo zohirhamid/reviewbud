@@ -9,6 +9,8 @@ from .forms import BusinessForm
 from django.contrib.auth import get_user_model
 User = get_user_model()
 from django.urls import reverse
+from businesses.tasks import update_google_stats_for_one_business
+from businesses.services import fetch_google_stats_for_place
 
 
 def landing_page(request):
@@ -28,17 +30,42 @@ def dashboard(request):
 def create_business(request):
     if request.method == 'POST':
         form = BusinessForm(request.POST)
+
+        # Guard: user typed text but didn’t pick from autocomplete
+        if not request.POST.get('place_id'):
+            form.add_error(None, "Please select your business from the autocomplete suggestions.")
+
         if form.is_valid():
             business = form.save(commit=False)
             business.owner = request.user
             business.save()
             business.get_review_link()
-            return redirect('businesses:dashboard')
-        else:
-            print(form.errors)  # optional: helpful for debugging
 
-    return render( request, 'businesses/create_business.html',
-        { 'GOOGLE_PLACES_API_KEY': settings.GOOGLE_PLACES_API_KEY, }
+            # 1. Sync fetch so the dashboard shows numbers immediately
+            rating, count = fetch_google_stats_for_place(business.place_id)
+            if (rating is not None) or (count is not None):
+                business.rating = rating
+                business.total_reviews = count
+                business.save(update_fields=["rating", "total_reviews"])
+            else:
+                # 2. Fallback: queue a background refresh just for this business
+                update_google_stats_for_one_business.delay(business.id) # type: ignore
+
+            return redirect('businesses:dashboard')
+
+        # If invalid, fall through and re-render
+        return render(
+            request,
+            'businesses/create_business.html',
+            {'GOOGLE_PLACES_API_KEY': settings.GOOGLE_PLACES_API_KEY, 'form': form},
+        )
+
+    # GET
+    form = BusinessForm()
+    return render(
+        request,
+        'businesses/create_business.html',
+        {'GOOGLE_PLACES_API_KEY': settings.GOOGLE_PLACES_API_KEY, 'form': form},
     )
 
 

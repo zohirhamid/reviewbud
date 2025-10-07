@@ -50,20 +50,26 @@
         <section class="business-grid">
           {% for business in businesses %}
             <div class="business-card" data-url="{% url 'businesses:business_detail' id=business.id %}" onclick="window.location.href=this.dataset.url">
+
               <div class="card-header">
                 <div class="business-info">
                   <h3>{{ business.name }}</h3>
                   <p class="address">{{ business.address }}</p>
                 </div>
-                <span class="status-badge">Active</span>
+                
+                {% if business.is_active == True %}
+                  <span class="status-badge">Active</span>
+                {% else %}
+                  <span class="status-badge">Not Active</span>
+                {% endif %}
               </div>
               <div class="card-stats">
                 <div class="stat">
-                  <span class="stat-value">4.8</span>
+                  <span class="stat-value">{{ business.rating|default:"–" }}</span>
                   <span class="stat-label">Avg Rating</span>
                 </div>
                 <div class="stat">
-                  <span class="stat-value">127</span>
+                  <span class="stat-value">{{ business.total_reviews|default:"0" }}</span>
                   <span class="stat-label">Reviews</span>
                 </div>
                 <div class="stat">
