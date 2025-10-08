@@ -45,15 +45,6 @@ CELERY_BEAT_SCHEDULE = {
 }
 
 
-'''
-DATABASES: Dict[str, Dict[str, Any]] = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-'''
-
 # SECURITY WARNING: don't run with debug turned on in production!
 if ENVIRONMENT == 'development':
     DEBUG = True
@@ -161,8 +152,6 @@ WSGI_APPLICATION = 'reviewbud.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
