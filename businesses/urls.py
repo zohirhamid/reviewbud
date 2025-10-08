@@ -7,6 +7,8 @@ urlpatterns = [
     path('', views.landing_page, name='landing_page'),
 
     path('dashboard/', views.dashboard, name='dashboard'),
+    path('analytics/', views.analytics, name='analytics'),
+    path('support/', views.support_view, name='support'),
 
     path('create/', views.create_business, name='create_business'),
     path('business/<int:id>/', views.business_detail, name='business_detail'),

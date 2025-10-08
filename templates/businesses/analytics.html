@@ -1,0 +1,316 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReviewAI – Analytics</title>
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+  <link rel="stylesheet" href="{% static 'css/analytics.css' %}">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="analytics-container">
+    {% include 'businesses/sidebar.html' %}
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <main class="main-content">
+      <!-- Top Navbar -->
+      <div class="top-navbar">
+        <div class="navbar-left">
+          <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <span></span><span></span><span></span>
+          </button>
+          <div class="greeting">Analytics Dashboard</div>
+        </div>
+        <div class="profile-picture">
+          <img src="{% static 'images/Profile-sample.png' %}" alt="Profile">
+        </div>
+      </div>
+
+      <!-- Page Content -->
+      <div class="page-content">
+        <header class="analytics-header">
+          <div class="header-left">
+            <h1>Analytics</h1>
+            <p class="header-subtitle">Select a business to view its insights</p>
+          </div>
+          <div class="header-filters">
+            <form method="get">
+              <select name="business" id="businessSelect" onchange="this.form.submit()">
+                <option value="">Select a Business</option>
+                {% for business in businesses %}
+                  <option value="{{ business.id }}" {% if business.id|stringformat:'s' == selected_id %}selected{% endif %}>
+                    {{ business.name }}
+                  </option>
+                {% endfor %}
+              </select>
+            </form>
+          </div>
+        </header>
+
+        {% if selected_business %}
+          <section class="analytics-section">
+            <h2>{{ selected_business.name }}</h2>
+
+            <!-- Metrics -->
+            <div class="metric-grid">
+              <div class="metric-card">
+                <div class="metric-icon">⭐</div>
+                <h4>Average Rating</h4>
+                <p class="metric-value">{{ selected_business.rating|default:"–" }}</p>
+                <span class="metric-change positive">+0.2 this month</span>
+              </div>
+              <div class="metric-card">
+                <div class="metric-icon">💬</div>
+                <h4>Total Reviews</h4>
+                <p class="metric-value">{{ selected_business.total_reviews|default:"0" }}</p>
+                <span class="metric-change positive">+12 this week</span>
+              </div>
+              <div class="metric-card">
+                <div class="metric-icon">🎯</div>
+                <h4>Target Rating</h4>
+                <p class="metric-value">4.5</p>
+                <span class="metric-change">Goal set</span>
+              </div>
+              <div class="metric-card">
+                <div class="metric-icon">📈</div>
+                <h4>Reviews to Goal</h4>
+                <p class="metric-value">32</p>
+                <span class="metric-change">5★ reviews needed</span>
+              </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="charts-row">
+              <div class="chart-container">
+                <h3>📊 Reviews Over Time</h3>
+                <div class="chart-controls">
+                  <button class="btn-outline active" onclick="updateTimeRange('weekly')">Weekly</button>
+                  <button class="btn-outline" onclick="updateTimeRange('monthly')">Monthly</button>
+                  <button class="btn-outline" onclick="updateTimeRange('yearly')">Yearly</button>
+                </div>
+                <div class="chart-wrapper">
+                  <canvas id="lineChart"></canvas>
+                </div>
+              </div>
+
+              <div class="chart-container">
+                <h3>⭐ Rating Distribution</h3>
+                <div class="pie-chart-wrapper">
+                  <canvas id="pieChart"></canvas>
+                </div>
+                <div style="margin-top: 1rem; text-align: center;">
+                  <small style="color: #6b7280;">Based on last 100 reviews</small>
+                </div>
+              </div>
+            </div>
+
+            <!-- Progress -->
+            <div class="progress-section">
+              <h3>⭐ Progress Toward Goal</h3>
+              <div class="progress-bar-container">
+                <div class="progress-bar" style="width: 75%;">4.2 / 4.5</div>
+              </div>
+              <p class="progress-text">
+                You're 0.3 points away from your goal. Keep collecting 5-star reviews!
+              </p>
+            </div>
+
+            <!-- Response Performance -->
+            <div class="response-widget">
+              <h3>⏱️ Response Performance</h3>
+              <div class="response-stats">
+                <div class="response-stat">
+                  <div class="response-stat-value">2.5h</div>
+                  <div class="response-stat-label">Avg Response Time</div>
+                </div>
+                <div class="response-stat">
+                  <div class="response-stat-value">92%</div>
+                  <div class="response-stat-label">Response Rate</div>
+                </div>
+                <div class="response-stat">
+                  <div class="response-stat-value">4.8</div>
+                  <div class="response-stat-label">Response Quality</div>
+                </div>
+              </div>
+            </div>
+          </section>
+        {% else %}
+          <section class="analytics-section empty-state">
+            <div class="empty-icon">📊</div>
+            <h3>No Business Selected</h3>
+            <p>Choose a business from the dropdown to view detailed analytics</p>
+          </section>
+        {% endif %}
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Mobile menu functionality
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const sidebar = document.querySelector('.sidebar');
+    const mobileOverlay = document.getElementById('mobileOverlay');
+    
+    mobileMenuBtn.addEventListener('click', function() {
+      sidebar.classList.toggle('open');
+      mobileOverlay.classList.toggle('active');
+      this.classList.toggle('active');
+    });
+    
+    mobileOverlay.addEventListener('click', function() {
+      sidebar.classList.remove('open');
+      mobileOverlay.classList.remove('active');
+      mobileMenuBtn.classList.remove('active');
+    });
+
+    // Chart initialization
+    if (document.getElementById('lineChart')) {
+      // Line Chart Configuration
+      const lineCtx = document.getElementById('lineChart').getContext('2d');
+      const lineChart = new Chart(lineCtx, {
+        type: 'line',
+        data: {
+          labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          datasets: [{
+            label: 'Number of Reviews',
+            data: [12, 19, 8, 25, 22, 15, 28],
+            borderColor: 'rgb(99, 102, 241)',
+            backgroundColor: 'rgba(99, 102, 241, 0.1)',
+            tension: 0.3,
+            fill: true,
+            pointRadius: 4,
+            pointHoverRadius: 6,
+            pointBackgroundColor: 'rgb(99, 102, 241)',
+            pointBorderColor: '#fff',
+            pointBorderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: {
+            intersect: false,
+            mode: 'index'
+          },
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              padding: 12,
+              titleFont: {
+                size: 14
+              },
+              bodyFont: {
+                size: 13
+              },
+              displayColors: false
+            }
+          },
+          scales: {
+            x: {
+              grid: {
+                display: false
+              },
+              ticks: {
+                font: {
+                  size: 12
+                }
+              }
+            },
+            y: {
+              beginAtZero: true,
+              grid: {
+                borderDash: [5, 5],
+                color: 'rgba(0, 0, 0, 0.08)'
+              },
+              ticks: {
+                font: {
+                  size: 12
+                },
+                stepSize: 5
+              }
+            }
+          }
+        }
+      });
+
+      // Pie Chart Configuration
+      const pieCtx = document.getElementById('pieChart').getContext('2d');
+      const pieChart = new Chart(pieCtx, {
+        type: 'pie',
+        data: {
+          labels: ['5 Stars', '4 Stars', '3-1 Stars'],
+          datasets: [{
+            data: [65, 25, 10],
+            backgroundColor: [
+              'rgba(34, 197, 94, 0.9)',
+              'rgba(99, 102, 241, 0.9)',
+              'rgba(239, 68, 68, 0.9)'
+            ],
+            borderColor: [
+              'rgb(34, 197, 94)',
+              'rgb(99, 102, 241)',
+              'rgb(239, 68, 68)'
+            ],
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                padding: 15,
+                font: {
+                  size: 12
+                }
+              }
+            },
+            tooltip: {
+              backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              padding: 12,
+              callbacks: {
+                label: function(context) {
+                  return context.label + ': ' + context.parsed + '%';
+                }
+              }
+            }
+          }
+        }
+      });
+
+      // Function to update time range
+      window.updateTimeRange = function(range) {
+        const buttons = document.querySelectorAll('.chart-controls .btn-outline');
+        buttons.forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+
+        let labels, data;
+        switch(range) {
+          case 'monthly':
+            labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+            data = [120, 150, 180, 220, 260, 310];
+            break;
+          case 'yearly':
+            labels = ['2020', '2021', '2022', '2023', '2024'];
+            data = [800, 1200, 1500, 2100, 2800];
+            break;
+          default: // weekly
+            labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+            data = [12, 19, 8, 25, 22, 15, 28];
+        }
+
+        lineChart.data.labels = labels;
+        lineChart.data.datasets[0].data = data;
+        lineChart.update();
+      };
+    }
+  </script>
+</body>
+</html>

@@ -26,6 +26,36 @@ def dashboard(request):
     context = {'businesses': businesses,}
     return render(request, 'businesses/dashboard.html', context)
 
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from .models import Business
+
+@login_required
+def analytics(request):
+    businesses = Business.objects.filter(owner=request.user)
+    selected_id = request.GET.get('business')
+    selected_business = None
+
+    # Only get a business if an ID was provided
+    if selected_id:
+        try:
+            selected_business = businesses.get(id=int(selected_id))
+        except (Business.DoesNotExist, ValueError):
+            selected_business = None
+
+    context = {
+        'businesses': businesses,
+        'selected_business': selected_business,
+        'selected_id': selected_id,
+    }
+    return render(request, 'businesses/analytics.html', context)
+
+
+
+@login_required
+def support_view(request):
+    return render(request, 'businesses/support.html')
+
 @login_required
 def create_business(request):
     if request.method == 'POST':

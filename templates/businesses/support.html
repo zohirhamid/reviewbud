@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/analytics.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <title>Support</title>
+</head>
+<body>
+    <div class="analytics-container">
+        <!-- SIDEBAR -->
+        {% include 'businesses/sidebar.html' %}
+
+        <!-- Mobile Overlay -->
+        <div class="mobile-overlay" id="mobileOverlay"></div>
+
+        <main class="main-content">
+            <h1>contact us: zohirhamid.com</h1>
+        </main>
+    </div>
+</body>
+</html>

@@ -7,13 +7,13 @@
         <a href="{% url 'businesses:dashboard' %}" class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
           My Businesses
         </a>
-        <a href="#" class="nav-link">
+        <a href="{% url 'businesses:analytics' %}" class="nav-link {% if request.resolver_match.url_name == 'analytics' %}active{% endif %}">
           Analytics
         </a>
         <a href="{% url 'users:settings' %}" class="nav-link {% if request.resolver_match.url_name == 'settings' %}active{% endif %}">
           Settings
         </a>
-        <a href="#" class="nav-link">
+        <a href="{% url 'businesses:support' %}" class="nav-link {% if request.resolver_match.url_name == 'support' %}active{% endif %}">
           Support
         </a>
     </nav>
