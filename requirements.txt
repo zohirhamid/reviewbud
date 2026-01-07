@@ -8,3 +8,4 @@ Requests==2.32.5
 dj-database-url
 PyJWT
 cryptography
+django-cors-headers
