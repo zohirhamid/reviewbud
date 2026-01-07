@@ -9,7 +9,6 @@ from .forms import BusinessForm
 from django.contrib.auth import get_user_model
 User = get_user_model()
 from django.urls import reverse
-from businesses.tasks import update_google_stats_for_one_business
 from businesses.services import fetch_google_stats_for_place
 
 def landing_page(request):

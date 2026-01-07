@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    'admin_honeypot',
 
     # Local apps
     'users',
