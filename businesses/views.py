@@ -12,7 +12,6 @@ from django.urls import reverse
 from businesses.tasks import update_google_stats_for_one_business
 from businesses.services import fetch_google_stats_for_place
 
-
 def landing_page(request):
     if request.user.is_authenticated:
         return redirect('businesses:dashboard')
@@ -25,10 +24,6 @@ def dashboard(request):
     
     context = {'businesses': businesses,}
     return render(request, 'businesses/dashboard.html', context)
-
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
-from .models import Business
 
 @login_required
 def analytics(request):

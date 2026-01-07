@@ -31,13 +31,11 @@ def get_example_reviews(rating, num_examples=3):
     if not reviews:
         return []
     
-    # Filter by rating (exact match preferred, ±1 tolerance)
     exact_matches = [r for r in reviews if r.get('stars') == rating]
     
     if len(exact_matches) >= num_examples:
         matching = exact_matches
     else:
-        # Fallback to ±1 star tolerance
         matching = [r for r in reviews if abs(r.get('stars', 0) - rating) <= 1]
     
     if not matching:
@@ -46,8 +44,7 @@ def get_example_reviews(rating, num_examples=3):
     return random.sample(matching, min(num_examples, len(matching)))
 
 
-
-
+# 1
 def generate_review_with_ai(ratings, feedback, business_name, tags=""):
     """
     Generate a Google-style review using GPT-4o with humanization post-processing.
@@ -136,7 +133,7 @@ def create_review_prompt(rating, feedback, business_name, tags, personality, tar
     tone_map = {
         5: "excited and positive, mention what made it special",
         4: "mostly happy, highlight what was good",
-        3: "neutral to slightly positive, it was decent/fine but nothing crazy",
+        3: "neutral to slightly positive, it was decent/fine",
         2: "disappointed but fair, explain what went wrong",
         1: "frustrated and disappointed, be direct about what failed"
     }
@@ -185,6 +182,9 @@ CRITICAL: Do NOT invent specific menu items, dishes, or products unless the cust
 
     return f"""Write a Google review for {business_name}.
 
+    
+
+    
 {context}
 
 {examples_section}
