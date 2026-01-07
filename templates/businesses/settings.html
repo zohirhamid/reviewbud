@@ -198,13 +198,13 @@
                 <a href="{% url 'businesses:checkout' plan='enterprise' %}" class="btn btn-primary">
                   Upgrade to Enterprise - $99/month
                 </a>
-                <a href="{% url 'users:settings' %}" class="btn btn-outline">
+                <a href="{% url 'businesses:settings' %}" class="btn btn-outline">
                   Manage Subscription
                 </a>
               </div>
             {% else %}
               <div class="business-actions">
-                <a href="{% url 'users:settings' %}" class="btn btn-outline">
+                <a href="{% url 'businesses:settings' %}" class="btn btn-outline">
                   Manage Subscription
                 </a>
               </div>

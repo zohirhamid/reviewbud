@@ -9,6 +9,7 @@ from .forms import BusinessForm
 from django.contrib.auth import get_user_model
 User = get_user_model()
 from django.urls import reverse
+from businesses.tasks import update_google_stats_for_one_business
 from businesses.services import fetch_google_stats_for_place
 
 def landing_page(request):
@@ -145,3 +146,48 @@ def qr_code(request, token):
     buffer.seek(0)
 
     return HttpResponse(buffer.getvalue(), content_type="image/png")
+
+
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+
+@login_required
+def settings_view(request):
+    from .forms import ProfileForm  # Move import here if not at top
+    
+    profile_form = ProfileForm(instance=request.user)
+    password_form = PasswordChangeForm(request.user)
+    has_password = request.user.has_usable_password()
+    
+    if request.method == 'POST':
+        action = request.GET.get('action')
+        
+        if action == 'profile':
+            profile_form = ProfileForm(request.POST, instance=request.user)
+            if profile_form.is_valid():
+                profile_form.save()
+                messages.success(request, 'Profile updated successfully!')
+                return redirect('businesses:settings')
+        
+        elif action == 'password':
+            if has_password:
+                password_form = PasswordChangeForm(request.user, request.POST)
+                if password_form.is_valid():
+                    user = password_form.save()
+                    update_session_auth_hash(request, user)
+                    messages.success(request, 'Password changed successfully!')
+                    return redirect('businesses:settings')
+        
+        elif action == 'delete':
+            if request.POST.get('confirm') == 'DELETE':
+                request.user.delete()
+                messages.success(request, 'Account deleted successfully!')
+                return redirect('businesses:landing_page')
+    
+    context = {
+        'profile_form': profile_form,
+        'password_form': password_form,
+        'has_password': has_password,
+    }
+    return render(request, 'businesses/settings.html', context)

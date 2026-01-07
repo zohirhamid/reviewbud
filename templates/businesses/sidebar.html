@@ -10,7 +10,7 @@
         <a href="{% url 'businesses:analytics' %}" class="nav-link {% if request.resolver_match.url_name == 'analytics' %}active{% endif %}">
           Analytics
         </a>
-        <a href="{% url 'users:settings' %}" class="nav-link {% if request.resolver_match.url_name == 'settings' %}active{% endif %}">
+        <a href="{% url 'businesses:settings' %}" class="nav-link {% if request.resolver_match.url_name == 'settings' %}active{% endif %}">
           Settings
         </a>
         <a href="{% url 'businesses:support' %}" class="nav-link {% if request.resolver_match.url_name == 'support' %}active{% endif %}">
@@ -18,8 +18,11 @@
         </a>
     </nav>
     <div class="sidebar-bottom">
-        <a href="{% url 'users:logout' %}" class="nav-link logout-link">
-          Logout
-        </a>
+        <form method="post" action="{% url 'account_logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="nav-link logout-link">
+                Logout
+            </button>
+        </form>
     </div>
 </aside>

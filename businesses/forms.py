@@ -7,13 +7,12 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model() 
 
-# Your existing form (keep exactly as is):
 class SignupForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
     password_confirm = forms.CharField(widget=forms.PasswordInput, label="Confirm Password")
     
     class Meta:
-        model = User  # ← This now references your custom User
+        model = User  
         fields = ['username', 'email', 'password']
     
     # checks if 2 password fields match
@@ -43,13 +42,13 @@ class LoginForm(forms.Form):
 class BusinessForm(forms.ModelForm):
     class Meta:
         model = Business
-        fields = ['name', 'address', 'google_review_url', 'place_id']  # include place_id
+        fields = ['name', 'address', 'google_review_url', 'place_id'] 
         widgets = {
             'address': forms.Textarea(attrs={'rows': 3}),
             'google_review_url': forms.URLInput(attrs={
                 'placeholder': 'https://search.google.com/local/writereview?placeid=...'
             }),
-            'place_id': forms.HiddenInput(),  # hidden but validated
+            'place_id': forms.HiddenInput(), 
         }
 
     def clean_place_id(self):

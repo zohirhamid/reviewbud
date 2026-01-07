@@ -39,7 +39,6 @@ body {
 .dashboard-container {
   display: flex;
   min-height: 100vh;
-  position: relative;
 }
 
 .sidebar {
@@ -67,6 +66,11 @@ body {
   margin-top: auto;
   padding-top: 1rem;
   border-top: 1px solid var(--border);
+}
+
+.sidebar-bottom form {
+  margin: 0;
+  padding: 0;
 }
 
 .logo {
@@ -109,6 +113,13 @@ body {
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  font-size: inherit;
+  font-family: inherit;
 }
 
 .nav-link::before {
@@ -496,7 +507,6 @@ body {
   font-size: 1.1rem;
 }
 
-/* Animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -598,7 +608,6 @@ body {
   }
 
   .card-stats {
-    grid-template-columns: repeat(3, 1fr);
     gap: 0.5rem;
   }
 
