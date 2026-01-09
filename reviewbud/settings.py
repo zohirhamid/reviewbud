@@ -133,10 +133,18 @@ LOGOUT_REDIRECT_URL = '/'
 # DJANGO ALLAUTH
 SITE_ID = 1
 
+SOCIALACCOUNT_STORE_TOKENS = False
+
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
+        'APP': {
+            'client_id': OAUTH_GOOGLE_CLIENT_ID,
+            'secret': OAUTH_GOOGLE_SECRET,
+            'key': ''
+        },
         'SCOPE': ['profile', 'email'],
         'AUTH_PARAMS': {'access_type': 'online'},
+        'VERIFIED_EMAIL': True,
     }
 }
 
