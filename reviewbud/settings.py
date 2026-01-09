@@ -20,7 +20,8 @@ ALLOWED_HOSTS = [
     '0.0.0.0',
     'reviewbud.co',
     'www.reviewbud.co',
-    'reviewbud-1.onrender.com',
+    'web-production-5567.up.railway.app',
+    '.railway.app'
 ]
 
 # API KEYS
