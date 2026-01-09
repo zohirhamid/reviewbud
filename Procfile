@@ -1,1 +1,1 @@
-web: python manage.py migrate && python manage.py collectstatic --noinput && gunicorn quickrate.wsgi --log-file -
+web: python manage.py migrate && python manage.py collectstatic --noinput && gunicorn reviewbud.wsgi --log-file -
