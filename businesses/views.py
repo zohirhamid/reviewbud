@@ -15,8 +15,7 @@ from businesses.services import fetch_google_stats_for_place
 def landing_page(request):
     if request.user.is_authenticated:
         return redirect('businesses:dashboard')
-    else:
-        return render(request, 'landing_page.html')
+    return render(request, 'landing_page.html')
 
 @login_required # only authenticated users can reach this function
 def dashboard(request):
@@ -44,8 +43,6 @@ def analytics(request):
         'selected_id': selected_id,
     }
     return render(request, 'businesses/analytics.html', context)
-
-
 
 @login_required
 def support_view(request):
@@ -154,7 +151,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 
 @login_required
 def settings_view(request):
-    from .forms import ProfileForm  # Move import here if not at top
+    from .forms import ProfileForm
     
     profile_form = ProfileForm(instance=request.user)
     password_form = PasswordChangeForm(request.user)
