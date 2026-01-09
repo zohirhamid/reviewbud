@@ -1,0 +1,236 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #5046e5;
+    --primary-light: #6366f1;
+    --primary-dark: #4338ca;
+    --secondary: #f59e0b;
+    --text-dark: #18181b;
+    --text-gray: #52525b;
+    --text-light: #71717a;
+    --bg-cream: #fef9f3;
+    --bg-white: #ffffff;
+    --bg-light: #f4f4f5;
+    --border: #e4e4e7;
+    --success: #22c55e;
+    --surface: #ffffff;
+    --accent: var(--primary);
+    --gradient-start: #2563eb;
+    --gradient-end: #4f46e5;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg-white);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 450px;
+}
+
+.auth-card {
+    background: var(--bg-white);
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.auth-header {
+    text-align: start;
+    margin-bottom: 30px;
+}
+
+.auth-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 8px;
+}
+
+.auth-header p {
+    color: #718096;
+    font-size: 1rem;
+}
+
+h1 {
+    font-size: clamp(2.2rem, 5.5vw, 3.3rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    margin-bottom: 1.5rem;
+    color: var(--text-dark);
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+/* Google Auth Button */
+.google-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 12px 16px;
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #4a5568;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    margin-bottom: 20px;
+    gap: 8px;
+}
+
+.google-btn:hover {
+    border-color: #cbd5e0;
+    background: #f7fafc;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.google-btn span {
+    font-size: 1.1rem;
+}
+
+/* Divider */
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #e2e8f0;
+}
+
+.divider span {
+    padding: 0 15px;
+    color: #718096;
+    font-size: 0.9rem;
+    background: white;
+}
+
+.auth-form {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+}
+
+.error {
+    color: #e53e3e;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+.auth-btn {
+    width: 100%;
+    background: var(--primary);
+    color: white;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-top: 10px;
+}
+
+.auth-btn:hover {
+    background: var(--primary-dark);
+}
+
+.auth-footer {
+    text-align: start;
+    padding-top: 20px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.auth-footer p {
+    color: #718096;
+}
+
+.auth-footer a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+    .auth-card {
+        padding: 30px 24px;
+    }
+    
+    .auth-header h1 {
+        font-size: 1.7rem;
+    }
+    
+    .google-btn {
+        padding: 10px 14px;
+        font-size: 0.95rem;
+    }
+}
+
+.search-container {
+    margin-bottom: 20px;
+}
+
+#business-search {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.business-preview-card {
+    background: #f8fafc;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    margin: 15px 0;
+}

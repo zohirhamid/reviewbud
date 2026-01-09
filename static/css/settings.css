@@ -1,0 +1,239 @@
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+  animation: fadeIn 0.6s ease;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  color: var(--text-gray);
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  background: var(--surface);
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+.disabled-input {
+  background: var(--bg-light) !important;
+  color: var(--text-light) !important;
+  cursor: not-allowed;
+}
+
+/* Messages */
+.message {
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  font-weight: 500;
+  animation: slideDown 0.3s ease;
+}
+
+.message-success {
+  background: rgba(34, 197, 94, 0.1);
+  color: var(--success);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.message-error {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.message-warning {
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--secondary);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+/* Account Actions */
+.account-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.action-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: var(--bg-light);
+  border-radius: 12px;
+  transition: background 0.3s ease;
+}
+
+.action-item:hover {
+  background: var(--bg-cream);
+}
+
+.action-item.danger {
+  background: rgba(239, 68, 68, 0.05);
+  border: 1px solid rgba(239, 68, 68, 0.1);
+}
+
+.action-item.danger:hover {
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.action-info h4 {
+  margin: 0 0 0.25rem 0;
+  color: var(--text-dark);
+  font-size: 1rem;
+}
+
+.action-info p {
+  margin: 0;
+  color: var(--text-gray);
+  font-size: 0.9rem;
+}
+
+/* Danger Button */
+.btn-danger {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-danger:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+/* Form Errors */
+.form-errors {
+  margin-top: 0.5rem;
+}
+
+.form-errors .error {
+  display: block;
+  color: #ef4444;
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+
+/* Input Error State */
+.form-group input.error,
+.form-group input:invalid:not(:placeholder-shown) {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+/* Disabled Card for Google OAuth Users */
+.disabled-card {
+  opacity: 0.7;
+}
+
+.disabled-card .card-header .card-subtitle {
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.disabled-content {
+  padding: 1.5rem;
+  text-align: center;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 1px dashed #d1d5db;
+}
+
+.disabled-content p {
+  color: #6b7280;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.disabled-card .disabled-content a {
+  pointer-events: auto;
+}
+
+/* Animations */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Settings */
+@media (max-width: 768px) {
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-group {
+    width: 100%;
+  }
+  
+  .action-item {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .action-info {
+    text-align: center;
+  }
+  
+  .btn-danger {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .settings-grid {
+    gap: 1.5rem;
+  }
+  
+  .form-group input {
+    font-size: 16px;
+  }
+}
