@@ -1,7 +1,7 @@
-from pathlib import Path
-import dj_database_url
 import os
+from pathlib import Path
 from dotenv import load_dotenv
+import dj_database_url
 
 # PATH CONFIGURATION
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -17,6 +17,7 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
+    '0.0.0.0',
     'reviewbud.co',
     'www.reviewbud.co',
     'reviewbud-1.onrender.com',
@@ -73,12 +74,16 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'reviewbud.urls'
 WSGI_APPLICATION = 'reviewbud.wsgi.application'
 
-# DATABASE
-DATABASE_URL = os.environ.get('DATABASE_URL')
+# DATABASE CONFIGURATION
+USE_POSTGRES = os.environ.get('USE_POSTGRES', 'False') == 'True'
 
-if DATABASE_URL:
+if USE_POSTGRES:
     DATABASES = {
-        'default': dj_database_url.parse(DATABASE_URL)
+        'default': dj_database_url.config(
+            default=os.environ.get('DATABASE_URL'),
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
     }
 else:
     DATABASES = {
@@ -87,6 +92,7 @@ else:
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
+    
 
 # TEMPLATES
 TEMPLATES = [
@@ -157,6 +163,8 @@ CORS_ALLOW_ALL_ORIGINS = DEBUG  # Only allow all in development
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
     'http://localhost:3000',
+    'http://127.0.0.1:5173',
+    'http://127.0.0.1:3000',
     'https://reviewbud.co',
     'https://www.reviewbud.co',
 ]

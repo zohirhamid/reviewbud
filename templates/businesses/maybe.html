@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ReviewAI – My Businesses</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #ffffff;
+      --bg-secondary: #fafafa;
+      --bg-tertiary: #f5f5f5;
+      --border: #e5e5e5;
+      --border-light: #ebebeb;
+      --text: #171717;
+      --text-secondary: #525252;
+      --text-tertiary: #a3a3a3;
+      --accent: #171717;
+      --accent-light: #404040;
+      --success: #22c55e;
+      --success-bg: #f0fdf4;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Layout */
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 240px;
+      border-right: 1px solid var(--border);
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      background: var(--bg);
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 8px;
+      margin-bottom: 24px;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .logo-icon {
+      width: 24px;
+      height: 24px;
+      background: var(--text);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-icon svg {
+      width: 14px;
+      height: 14px;
+      color: white;
+    }
+
+    .logo-text {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .nav {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      flex: 1;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.15s ease;
+    }
+
+    .nav-item:hover {
+      background: var(--bg-tertiary);
+      color: var(--text);
+    }
+
+    .nav-item.active {
+      background: var(--bg-tertiary);
+      color: var(--text);
+    }
+
+    .nav-item svg {
+      width: 16px;
+      height: 16px;
+      opacity: 0.7;
+    }
+
+    .nav-item.active svg,
+    .nav-item:hover svg {
+      opacity: 1;
+    }
+
+    .sidebar-footer {
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      margin-top: 12px;
+    }
+
+    .logout-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .logout-btn:hover {
+      background: var(--bg-tertiary);
+      color: var(--text);
+    }
+
+    .logout-btn svg {
+      width: 16px;
+      height: 16px;
+      opacity: 0.7;
+    }
+
+    /* Main */
+    .main {
+      flex: 1;
+      margin-left: 240px;
+    }
+
+    /* Header */
+    .header {
+      padding: 16px 32px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 50;
+    }
+
+    .header-title {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+    }
+
+    /* Content */
+    .content {
+      padding: 32px;
+      max-width: 1200px;
+    }
+
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+    }
+
+    .page-title {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .page-subtitle {
+      color: var(--text-tertiary);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: inherit;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+      border: 1px solid var(--accent);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-light);
+    }
+
+    .btn-secondary {
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-secondary);
+      border-color: var(--text-tertiary);
+    }
+
+    .btn svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* Table */
+    .table-container {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .table th {
+      text-align: left;
+      padding: 10px 16px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-tertiary);
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-light);
+      vertical-align: middle;
+    }
+
+    .table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .table tbody tr {
+      transition: background 0.1s ease;
+      cursor: pointer;
+    }
+
+    .table tbody tr:hover {
+      background: var(--bg-secondary);
+    }
+
+    .business-cell {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .business-avatar {
+      width: 32px;
+      height: 32px;
+      background: var(--bg-tertiary);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--text-secondary);
+      flex-shrink: 0;
+    }
+
+    .business-info {
+      min-width: 0;
+    }
+
+    .business-name {
+      font-weight: 500;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .business-address {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 500;
+      border-radius: 100px;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .status-active {
+      background: var(--success-bg);
+      color: #15803d;
+    }
+
+    .status-active .status-dot {
+      background: var(--success);
+    }
+
+    .status-inactive {
+      background: var(--bg-tertiary);
+      color: var(--text-tertiary);
+    }
+
+    .status-inactive .status-dot {
+      background: var(--text-tertiary);
+    }
+
+    .metric {
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .metric-label {
+      font-size: 12px;
+      color: var(--text-tertiary);
+    }
+
+    .actions-cell {
+      display: flex;
+      gap: 8px;
+    }
+
+    .action-btn {
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .action-btn:hover {
+      background: var(--bg-secondary);
+      border-color: var(--text-tertiary);
+      color: var(--text);
+    }
+
+    /* Empty State */
+    .empty-state {
+      padding: 64px 32px;
+      text-align: center;
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      background: var(--bg-secondary);
+    }
+
+    .empty-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 16px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-tertiary);
+    }
+
+    .empty-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .empty-desc {
+      font-size: 13px;
+      color: var(--text-tertiary);
+      margin-bottom: 20px;
+    }
+
+    /* Mobile */
+    .mobile-toggle {
+      display: none;
+      width: 36px;
+      height: 36px;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      color: var(--text);
+    }
+
+    .mobile-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 90;
+    }
+
+    @media (max-width: 900px) {
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.2s ease;
+      }
+      .sidebar.open {
+        transform: translateX(0);
+      }
+      .main {
+        margin-left: 0;
+      }
+      .mobile-toggle {
+        display: flex;
+      }
+      .mobile-overlay.active {
+        display: block;
+      }
+      .content {
+        padding: 24px 16px;
+      }
+      .header {
+        padding: 12px 16px;
+      }
+      .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+      .table th:nth-child(4),
+      .table td:nth-child(4) {
+        display: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .table th:nth-child(3),
+      .table td:nth-child(3) {
+        display: none;
+      }
+      .actions-cell {
+        flex-direction: column;
+        gap: 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <a href="#" class="logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </div>
+        <span class="logo-text">ReviewAI</span>
+      </a>
+      
+      <nav class="nav">
+        <a href="#" class="nav-item active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+          </svg>
+          Businesses
+        </a>
+        <a href="#" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 3v18h18"/>
+            <path d="M18 9l-5 5-4-4-3 3"/>
+          </svg>
+          Analytics
+        </a>
+        <a href="#" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+          Settings
+        </a>
+        <a href="#" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/>
+          </svg>
+          Support
+        </a>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <button class="logout-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>
+          </svg>
+          Log out
+        </button>
+      </div>
+    </aside>
+
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Main Content -->
+    <main class="main">
+      <header class="header">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <button class="mobile-toggle" id="mobileToggle">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 12h18M3 6h18M3 18h18"/>
+            </svg>
+          </button>
+          <span class="header-title">Businesses</span>
+        </div>
+        <div class="header-actions">
+          <img src="https://i.pravatar.cc/28?img=3" alt="Avatar" class="avatar">
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">My Businesses</h1>
+            <p class="page-subtitle">Manage your business profiles and review collection</p>
+          </div>
+          <a href="#" class="btn btn-primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M12 5v14M5 12h14"/>
+            </svg>
+            Add Business
+          </a>
+        </div>
+
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Business</th>
+                <th>Status</th>
+                <th>Rating</th>
+                <th>Reviews</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="business-cell">
+                    <div class="business-avatar">CM</div>
+                    <div class="business-info">
+                      <div class="business-name">Café Moreno</div>
+                      <div class="business-address">123 Main Street, Brooklyn, NY</div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <span class="status status-active">
+                    <span class="status-dot"></span>
+                    Active
+                  </span>
+                </td>
+                <td>
+                  <span class="metric">4.8</span>
+                </td>
+                <td>
+                  <span class="metric">247</span>
+                </td>
+                <td onclick="event.stopPropagation()">
+                  <div class="actions-cell">
+                    <a href="#" class="action-btn">View Form</a>
+                    <a href="#" class="action-btn">QR Code</a>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="business-cell">
+                    <div class="business-avatar">SB</div>
+                    <div class="business-info">
+                      <div class="business-name">Sunrise Bakery</div>
+                      <div class="business-address">456 Oak Avenue, Manhattan, NY</div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <span class="status status-active">
+                    <span class="status-dot"></span>
+                    Active
+                  </span>
+                </td>
+                <td>
+                  <span class="metric">4.6</span>
+                </td>
+                <td>
+                  <span class="metric">89</span>
+                </td>
+                <td onclick="event.stopPropagation()">
+                  <div class="actions-cell">
+                    <a href="#" class="action-btn">View Form</a>
+                    <a href="#" class="action-btn">QR Code</a>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="business-cell">
+                    <div class="business-avatar">TG</div>
+                    <div class="business-info">
+                      <div class="business-name">The Green Room</div>
+                      <div class="business-address">789 Park Blvd, Queens, NY</div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <span class="status status-inactive">
+                    <span class="status-dot"></span>
+                    Inactive
+                  </span>
+                </td>
+                <td>
+                  <span class="metric">—</span>
+                </td>
+                <td>
+                  <span class="metric">0</span>
+                </td>
+                <td onclick="event.stopPropagation()">
+                  <div class="actions-cell">
+                    <a href="#" class="action-btn">View Form</a>
+                    <a href="#" class="action-btn">QR Code</a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Empty State (hidden, for reference) -->
+        <!--
+        <div class="empty-state">
+          <div class="empty-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <path d="M12 8v8M8 12h8"/>
+            </svg>
+          </div>
+          <h3 class="empty-title">No businesses yet</h3>
+          <p class="empty-desc">Add your first business to start collecting reviews</p>
+          <a href="#" class="btn btn-primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M12 5v14M5 12h14"/>
+            </svg>
+            Add Business
+          </a>
+        </div>
+        -->
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const sidebar = document.getElementById('sidebar');
+    const mobileToggle = document.getElementById('mobileToggle');
+    const mobileOverlay = document.getElementById('mobileOverlay');
+
+    mobileToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+      mobileOverlay.classList.toggle('active');
+    });
+
+    mobileOverlay.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      mobileOverlay.classList.remove('active');
+    });
+
+    // Row click navigation
+    document.querySelectorAll('.table tbody tr').forEach(row => {
+      row.addEventListener('click', () => {
+        console.log('Navigate to business detail');
+      });
+    });
+  </script>
+</body>
+</html>
